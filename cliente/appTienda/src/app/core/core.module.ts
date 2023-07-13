@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatToolbarModule,
     RouterModule,
     BrowserAnimationsModule,
+    MatCardModule
   ],
   exports: [
     HeaderComponent,
