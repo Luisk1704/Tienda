@@ -21,7 +21,7 @@ export class ListaComponent implements AfterViewInit {
   dataSource=new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id','marca','precio','estado'];
+  displayedColumns = ['id','marca','precio','estado','acciones'];
 
   constructor(private gService:GenericService,
     private router: Router,
@@ -36,7 +36,7 @@ export class ListaComponent implements AfterViewInit {
   listaVendedor(){
     //localhost:3000/videojuego/
     this.gService
-      .list('ropa/vendedor/5')
+      .list('ropa/vendedor/2')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         console.log(data);

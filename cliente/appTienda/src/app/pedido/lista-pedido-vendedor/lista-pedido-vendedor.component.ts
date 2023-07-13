@@ -21,7 +21,7 @@ export class ListaPedidoVendedorComponent implements AfterViewInit {
   dataSource=new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['pedido','producto','cantidad','subtotal'];
+  displayedColumns = ['pedido','producto','cantidad','subtotal','acciones'];
 
   constructor(private gService:GenericService,
     private router: Router,
@@ -47,7 +47,7 @@ export class ListaPedidoVendedorComponent implements AfterViewInit {
       })
   }
   
-  detalleProducto(id:Number){
+  detallePedido(id:Number){
     this.router.navigate(['/pedido',id],
     {
       relativeTo:this.route
