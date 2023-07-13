@@ -1,0 +1,193 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Proveedor{
+  id Int @id @default(autoincrement())
+  nombre String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  ropas Ropa[]
+}
+
+model Ropa{
+  id Int @id  @default(autoincrement())
+  precio Decimal
+  estado String
+  cantidad Int
+  proveedorId Int
+  proveedor Proveedor @relation(fields: [proveedorId],references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  categorias Categoria[] 
+  fotos Foto[]
+  ordenes PedidoRopa[]
+  preguntas Pregunta[]
+  usuarios Usuario[]
+}
+
+model PedidoRopa{
+  id Int @id  @default(autoincrement())
+  idRopa Int
+  idPedido Int
+  cantidad Int
+  subtotal Decimal
+  pedido Pedido @relation(fields: [idPedido],references: [id])
+  ropa Ropa @relation(fields: [idRopa],references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Pedido{
+  id Int @id @default(autoincrement())
+  vendedorId Int 
+  descuento Decimal
+  IV Decimal
+  estado String
+  subtotal Decimal
+  ropas PedidoRopa[]
+  compras Compra[]
+  usuario Usuario @relation(fields: [vendedorId],references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Compra{
+  id Int @id @default(autoincrement())
+  fecha DateTime @default(now())
+  Total Decimal
+  clienteId Int
+  usuario Usuario @relation(fields: [clienteId],references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  metodos MetodoPago[]
+  evaluaciones Evaluacion[]
+  pedidos Pedido[]
+}
+
+model Usuario{
+  id Int @id @default(autoincrement())
+  nombre String
+  cedula String
+  telefono String
+  correo String
+  contrasenna String
+  estado Boolean
+  rolId Int
+  rol Rol @relation(fields: [rolId],references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  pedidos Pedido[]
+  direcciones Direccion[]
+  preguntas Pregunta[]
+  respuestas Respuesta[]
+  informes Informe[]
+  evaluaciones Evaluacion[]
+  metodos MetodoPago[]
+  compras Compra[]
+  ropas Ropa[]
+}
+
+model MetodoPago{
+  id Int @id @default(autoincrement())
+  descripcion String
+  usuarioId Int
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  compras Compra[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Pregunta{
+  id Int @id @default(autoincrement())
+  descripcion String
+  usuarioId Int
+  usuario Usuario @relation(fields: [usuarioId],references: [id])
+  ropaId Int
+  ropa Ropa @relation(fields: [ropaId],references: [id])
+  respuestas Respuesta[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Respuesta{
+  id Int @id @default(autoincrement())
+  descripcion String
+  usuarioId Int
+  usuario Usuario @relation(fields: [usuarioId],references: [id])
+  preguntas Pregunta[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Informe{
+  id Int @id @default(autoincrement())
+  descripcion String
+  usuarioId Int
+  usuario Usuario @relation(fields: [usuarioId],references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Evaluacion{
+  id Int @id @default(autoincrement())
+  nombre String
+  usuarioId Int
+  compraId Int
+  nota Int
+  descripcion String?
+  usuarioRol String
+  usuario Usuario @relation(fields: [usuarioId],references: [id])
+  compra Compra @relation(fields: [compraId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Categoria{
+  id Int @id @default(autoincrement())
+  descripcion String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  ropas Ropa[] 
+}
+
+model Rol{
+  id Int @id @default(autoincrement())
+  nombre String
+  usuario Usuario[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Direccion{
+  id Int @id @default(autoincrement())  
+  usuarioId Int
+  usuario Usuario @relation(fields: [usuarioId],references: [id])
+  provincia String
+  canton String
+  distrito String
+  direccionExacta String
+  codPostal String
+  telef String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now()) 
+}
+
+model Foto{
+  id Int @id @default(autoincrement())
+  ropaId Int
+  ropa Ropa @relation(fields: [ropaId],references: [id])
+  foto String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+

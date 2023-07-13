@@ -1,0 +1,39 @@
+table {
+  width: 100%;
+  background: linear-gradient(rgba(0, 0, 0), rgba(0, 0, 0, 0.2)) !important;
+}
+
+.cuerpo {
+  padding: 2% !important;
+}
+
+mat-card {
+  border: solid 5px rgb(95, 4, 152, .5) !important;
+  border-radius: 10px !important;
+}
+
+th {
+  /*border-bottom: solid 2px rgb(95, 4, 152, .5) !important;*/
+  color: blueviolet;
+}
+
+td{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.acciones {
+  padding: 6px;
+  border: solid 2.5px blueviolet !important;
+  background-color: none;
+  border-radius: 10px !important;
+  width: 17%;
+}
+
+.acciones:hover{
+  padding: 6px;
+  border: solid 2.5px blueviolet !important;
+  background-color: blueviolet;
+  border-radius: 10px !important;
+  width: 17%;
+}

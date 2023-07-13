@@ -1,0 +1,36 @@
+<div class="cuerpo">
+    <mat-card *ngIf="datos">
+        <mat-card-content>
+            <div class="celda">
+                <mat-card-header class="celda encabezado">
+                    <strong>Pedido #&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.id}}
+                </mat-card-header>
+                <mat-card-header class="celda encabezado">
+                    <strong>Cliente:&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.compras[0].usuario.nombre}}
+                </mat-card-header>
+                <mat-card-header class="celda encabezado">
+                    <strong>Direccion&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.compras[0].usuario.direcciones[0].distrito}},
+                    {{datos.compras[0].usuario.direcciones[0].canton}},{{datos.compras[0].usuario.direcciones[0].provincia}}.{{datos.compras[0].usuario.direcciones[0].direccionExacta}}
+                    
+                </mat-card-header>
+                <mat-card-header class="celda encabezado">
+                    <strong>Metodo pago&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.compras[0].metodos[0].descripcion}}
+                </mat-card-header>   
+                <mat-card-content class="pedido" *ngFor="let item of datos.ropas">
+                    <mat-card-header><strong>Id&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{item.id}}</mat-card-header>
+                    <mat-card-header><strong>Producto&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{item.ropa.categorias[0].descripcion}}</mat-card-header>
+                    <mat-card-header><strong>Marca&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{item.ropa.proveedor.nombre}}</mat-card-header>
+                    <mat-card-header><strong>Cantidad&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{item.cantidad}}</mat-card-header>
+                    <mat-card-header><strong>Subtotal&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{item.subtotal | currency: 'CRC':'symbol-narrow'}}</mat-card-header>
+                </mat-card-content>                             
+                <br>
+                <br>
+                <div>
+                    <a class="regresar" [routerLink]="['/pedido/lista-cliente']">
+                        Regresar
+                    </a>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

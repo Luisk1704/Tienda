@@ -1,0 +1,21 @@
+<p>
+    <mat-toolbar color="primary">
+        <!--<button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+            <mat-icon>menu</mat-icon>
+        </button>-->
+        <a [routerLink]="['/inicio']" routerLinkActive="router-link-active" >Inicio</a>
+        <a [routerLink]="['/usuario/lista']" routerLinkActive="router-link-active" >Usuarios</a>
+        <a [routerLink]="['/ropa/lista-vendedor']" routerLinkActive="router-link-active" >Productos</a> 
+        <a [routerLink]="['/ropa/lista-cliente']" routerLinkActive="router-link-active" >Productos Cliente</a>
+        <a [routerLink]="['/pedido/lista-vendedor']" routerLinkActive="router-link-active">Pedidos</a>
+        <a [routerLink]="['/pedido/lista-cliente']" routerLinkActive="router-link-active">Pedidos Cliente</a>
+
+        <span class="example-spacer"></span>
+        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+            <mat-icon>favorite</mat-icon>
+        </button>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+            <mat-icon>share</mat-icon>
+        </button>
+    </mat-toolbar>
+</p>

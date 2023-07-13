@@ -1,0 +1,53 @@
+<div class="cuerpo">
+    <mat-card *ngIf="datos">        
+        <mat-card-content>
+            <div class="row">
+                <div class="col-lg-6 celda" *ngIf="2">                    
+                    <mat-grid-list class="celda" [cols]="2" gutterSize="10px" *ngIf="datos">
+                        <mat-grid-tile *ngFor="let item of datos.fotos">
+                            <img width="100%" src="{{item.foto}}">
+                        </mat-grid-tile>                
+                    </mat-grid-list>
+                </div>
+                <div class="col-lg-6 celda">
+                    <mat-card-header class="celda">
+                        <strong>Marca&nbsp;&nbsp;|</strong>&nbsp;&nbsp;{{datos.proveedor.nombre}}            
+                    </mat-card-header>
+                    <mat-grid-list class="celda" [cols]="5" gutterSize="5px" *ngIf="datos">        
+                        <mat-grid-tile>
+                            <mat-card-header><strong>Categorías&nbsp;&nbsp;&nbsp;&nbsp;|</strong></mat-card-header>
+                        </mat-grid-tile>
+                        <mat-grid-tile *ngFor="let item of datos.categorias">
+                            <mat-card-header class="acciones">{{item.descripcion}}</mat-card-header>
+                        </mat-grid-tile>                         
+                    </mat-grid-list>
+                    <mat-card-header class="celda">
+                        <strong>Precio&nbsp;&nbsp;|</strong>&nbsp;&nbsp;{{datos.precio | currency: 'CRC':'symbol-narrow'}}            
+                    </mat-card-header>
+                    <mat-card-header class="celda">
+                        <strong>Cantidad&nbsp;&nbsp;|</strong>&nbsp;&nbsp;{{datos.cantidad}}            
+                    </mat-card-header>
+                    <mat-card-header class="celda">
+                        <strong>Estado&nbsp;&nbsp;|</strong>&nbsp;&nbsp;{{datos.estado}}            
+                    </mat-card-header>
+                    <mat-card-header class="celda">        
+                        <strong>Preguntas relacionadas:</strong>                
+                    </mat-card-header>
+                    <mat-card-content *ngFor="let item of datos.preguntas">  
+                        <mat-card-header>{{item.descripcion}}</mat-card-header>
+                        <mat-card-header style="color: white;">{{item.respuestas[0].descripcion}}</mat-card-header>
+                        <br>                         
+                    </mat-card-content>
+                    <br>
+                    <br>
+                    <div>                        
+                        <a class="regresar" [routerLink]="['/ropa/lista-cliente']">
+                            Regresar
+                        </a>
+                    </div>
+                </div>
+            </div>            
+        </mat-card-content>        
+    </mat-card>
+</div>
+

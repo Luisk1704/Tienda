@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background: linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0, .5)), url(../src/assets/images/Tienda.jpeg) !important;
+    background-size: cover !important;
+}
+
+
+
+
