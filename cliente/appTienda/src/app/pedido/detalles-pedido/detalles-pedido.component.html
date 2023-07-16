@@ -1,27 +1,43 @@
 <div class="cuerpo">
     <mat-card *ngIf="datos">
         <mat-card-content>
-            <div class="celda">
+            <div class="celda">                
                 <mat-card-header class="celda encabezado">
                     <strong>Pedido #&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.id}}
                 </mat-card-header>
                 <mat-card-header class="celda encabezado">
-                    <strong>Cliente:&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.compras[0].usuario.nombre}}
+                    <strong>Cliente:&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.usuario.nombre}}
                 </mat-card-header>
                 <mat-card-header class="celda encabezado">
-                    <strong>Direccion&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.compras[0].usuario.direcciones[0].distrito}},
-                    {{datos.compras[0].usuario.direcciones[0].canton}},{{datos.compras[0].usuario.direcciones[0].provincia}}.{{datos.compras[0].usuario.direcciones[0].direccionExacta}}
+                    <strong>Direccion&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.direccion.distrito}},
+                    {{datos.direccion.canton}},{{datos.direccion.provincia}}.{{datos.direccion.direccionExacta}}
                     
                 </mat-card-header>
                 <mat-card-header class="celda encabezado">
-                    <strong>Metodo pago&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.compras[0].metodos[0].descripcion}}
+                    <strong>Metodo pago&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.metodo.descripcion}}
                 </mat-card-header>   
-                <mat-card-content class="pedido" *ngFor="let item of datos.ropas">
-                    <mat-card-header><strong>Id&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{item.id}}</mat-card-header>
-                    <mat-card-header><strong>Producto&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{item.ropa.categorias[0].descripcion}}</mat-card-header>
-                    <mat-card-header><strong>Marca&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{item.ropa.proveedor.nombre}}</mat-card-header>
-                    <mat-card-header><strong>Cantidad&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{item.cantidad}}</mat-card-header>
-                    <mat-card-header><strong>Subtotal&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{item.subtotal | currency: 'CRC':'symbol-narrow'}}</mat-card-header>
+                <mat-card-content class="pedido">
+                    <table class="tabla">
+                        <thead>
+                          <tr class="registro">
+                            <th scope="col">#</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Subtotal</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngFor="let item of datos.ropas">
+                            <tr class="registro">
+                                <td >{{item.id}}</td>
+                                <td >{{item.ropa.nombre}}</td>
+                                <td >{{item.ropa.proveedor.nombre}}</td>
+                                <td >{{item.cantidad}}</td>
+                                <td >{{item.subtotal | currency: 'CRC':'symbol-narrow'}}</td>
+                            </tr>                                                        
+                        </tbody>
+                        <tr><td></td><td></td><td></td><td style="color: blueviolet; font-size: large;"><strong>Total:</strong></td><td style="font-size: large;">{{datos.subtotal | currency: 'CRC':'symbol-narrow'}}</td></tr>
+                    </table>                    
                 </mat-card-content>                             
                 <br>
                 <br>

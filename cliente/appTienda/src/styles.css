@@ -5,7 +5,7 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background: linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0, .5)), url(../src/assets/images/Tienda.jpeg) !important;
-    background-size: cover !important;
+    background-size: cover !important ;
 }
 
 

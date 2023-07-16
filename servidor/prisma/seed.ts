@@ -109,225 +109,319 @@ async function main() {
 
     await prisma.metodoPago.create({
       data:{
-        usuarioId: 4,
-        descripcion: "Tarjeta"
+        idCliente: 4,
+        descripcion: "Tarjeta",
       }
     })
 
     await prisma.metodoPago.create({
       data:{
-        usuarioId: 4,
+        idCliente: 4,
         descripcion: "Efectivo"
       }
     })
 
     await prisma.metodoPago.create({
       data:{
-        usuarioId: 4,
+        idCliente: 4,
+        descripcion: "Sinpe Movil"
+      }
+    })
+
+    await prisma.metodoPago.create({
+      data:{
+        idCliente: 6,
+        descripcion: "Tarjeta",
+      }
+    })
+
+    await prisma.metodoPago.create({
+      data:{
+        idCliente: 6,
+        descripcion: "Efectivo"
+      }
+    })
+
+    await prisma.metodoPago.create({
+      data:{
+        idCliente: 6,
+        descripcion: "Sinpe Movil"
+      }
+    })
+
+    await prisma.metodoPago.create({
+      data:{
+        idCliente: 7,
+        descripcion: "Tarjeta",
+      }
+    })
+
+    await prisma.metodoPago.create({
+      data:{
+        idCliente: 7,
+        descripcion: "Efectivo"
+      }
+    })
+
+    await prisma.metodoPago.create({
+      data:{
+        idCliente: 7,
         descripcion: "Sinpe Movil"
       }
     })
 
     await prisma.ropa.create({
       data: {
+        nombre: "Camisa",
         cantidad: 50,        
         proveedorId: 1,        
         precio: 15000.23,
+        vendedorId: 2,
         estado: "usado-nuevo",
         categorias: {
           connect: [{id: 18} , { id: 19 } , { id: 7 }]
-        },
-        usuarios:{
-          connect: {id:2}
         }
       }
     })
 
     await prisma.ropa.create({
       data: {
-        cantidad: 100,
-        proveedorId: 2,  
+        nombre: "Tenis",
+        cantidad: 100,        
+        proveedorId: 2,        
         precio: 40000.23,
+        vendedorId: 2,
         estado: "nuevo",
         categorias: {
           connect: [{id: 16} , { id: 17 }]
-        },
-        usuarios:{
-          connect: {id:2}
-        }  
+        }
       }
     })
 
     await prisma.ropa.create({
       data: {
-        cantidad: 70,
-        proveedorId: 3,  
+        nombre: "Camiseta",
+        cantidad: 100,        
+        proveedorId: 3,        
         precio: 30000.23,
+        vendedorId: 2,
         estado: "usado-aceptable",
         categorias: {
-          connect: [{id: 8} , {id: 18}]
-        },
-        usuarios:{
-          connect: {id:2}
-        }  
+          connect: [{id: 8} , { id: 18 }]
+        }
       }
     })
 
     await prisma.ropa.create({
       data: {
-        cantidad: 200,
-        proveedorId: 3,  
+        nombre: "Camiseta",
+        cantidad: 200,        
+        proveedorId: 3,        
         precio: 40000.23,
+        vendedorId: 2,
         estado: "usado-nuevo",
         categorias: {
-          connect: [{id: 8} , { id: 21 }, {id: 18},{id:20}]
-        },
-        usuarios:{
-          connect: {id:2}
-        }  
+          connect: [{id: 8} , { id: 18 }]
+        }
       }
     })
 
     await prisma.ropa.create({
       data: {
-        cantidad: 100,
-        proveedorId: 2,  
+        nombre: "Camisa",
+        cantidad: 100,        
+        proveedorId: 2,        
         precio: 40000.23,
+        vendedorId: 5,
         estado: "usado-aceptable",
         categorias: {
-          connect: [{id: 8} , {id:20}]
-        },
-        usuarios:{
-          connect: {id:5}
-        }  
+          connect: [{id: 18} , { id: 20}]
+        }
       }
     })
 
     await prisma.ropa.create({
       data: {
-        cantidad: 200,
-        proveedorId: 3,  
-        precio: 15000.23,
+        nombre: "Camisa",
+        cantidad: 100,        
+        proveedorId: 3,        
+        precio: 40000.23,
+        vendedorId: 5,
         estado: "nuevo",
         categorias: {
-          connect: [ {id: 18},{id:20}]
-        },
-        usuarios:{
-          connect: {id:3}
-        }  
+          connect: [{id: 18} , { id: 20}]
+        }
       }
     })
 
     await prisma.ropa.create({
       data: {
-        cantidad: 200,
-        proveedorId: 3,  
+        nombre: "Camisa",
+        cantidad: 200,        
+        proveedorId: 3,        
         precio: 15000.23,
+        vendedorId: 5,
         estado: "nuevo",
         categorias: {
-          connect: [ {id: 18},{id:20}]
-        },
-        usuarios:{
-          connect: {id:5}
-        }  
+          connect: [{id: 18} , { id: 20}]
+        }
       }
     })
 
     await prisma.ropa.create({
       data: {
-        cantidad: 500,
-        proveedorId: 2,  
+        nombre: "Camisa",
+        cantidad: 500,        
+        proveedorId: 2,        
         precio: 15000.23,
-        estado: "nuevo",
+        vendedorId: 5,
+        estado: "usado-aceptable",
         categorias: {
-          connect: [ {id: 18},{id:20}]
-        },
-        usuarios:{
-          connect: {id:5}
-        }  
+          connect: [{id: 18} , { id: 20}]
+        }
+      }
+    })       
+
+    await prisma.direccion.create({
+      data:{
+        usuarioId: 4,
+        provincia: "Alajuela",
+        canton: "San Carlos",
+        distrito: "Ciudad Quesada",
+        direccionExacta: "3 mts oeste",
+        codPostal: "313233",
+        telef: "89882112"
+      }
+    })
+
+    await prisma.direccion.create({
+      data:{
+        usuarioId: 6,
+        provincia: "Alajuela",
+        canton: "Alajuela",
+        distrito: "Alajuela",
+        direccionExacta: "4 mts este",
+        codPostal: "313234",
+        telef: "89888788"
+      }
+    })
+
+    await prisma.direccion.create({
+      data:{
+        usuarioId: 1,
+        provincia: "San Jose",
+        canton: "Perez Zeledon",
+        distrito: "Rivas",
+        direccionExacta: "5 mts norte",
+        codPostal: "383232",
+        telef: "89886776"
       }
     })
 
     await prisma.pedido.create({
       data: {
-        vendedorId: 2,
+        idPago: 1,
+        clienteId: 4,
+        direccionId: 1,
         descuento: 0.12,
         IV: 0.13,
         subtotal: 70000,
-        estado: "Pendiente"
+        estado: "Pendiente",
+        Total: 65000
       }
     })
 
     await prisma.pedido.create({
       data: {
-        vendedorId: 2,
+        idPago: 1,
+        clienteId: 4,
+        direccionId: 1,
         descuento: 0.12,
         IV: 0.13,
         subtotal: 120000,
-        estado: "En Progreso"
+        estado: "En Progreso",
+        Total: 115000
       }
     })
 
     await prisma.pedido.create({
       data: {
-        vendedorId: 5,
+        idPago: 1,
+        clienteId: 4,
+        direccionId: 1,
         descuento: 0.12,
         IV: 0.13,
         subtotal: 120000,
-        estado: "En Progreso"
+        estado: "En Progreso",
+        Total: 115000
       }
     })
 
     await prisma.pedido.create({
       data: {
-        vendedorId: 5,
+        idPago: 1,
+        clienteId: 4,
+        direccionId: 1,
         descuento: 0.12,
         IV: 0.13,
         subtotal: 30000,
-        estado: "Finalizado"
+        estado: "Finalizado",
+        Total: 115000
       }
     })
 
     await prisma.pedido.create({
       data: {
-        vendedorId: 2,
+        idPago: 4,
+        clienteId: 6,
+        direccionId: 2,
         descuento: 0.12,
         IV: 0.13,
         subtotal: 15000,
-        estado: "Finalizado"
+        estado: "Finalizado",
+        Total: 115000
       }
     })
 
     await prisma.pedido.create({
       data: {
-        vendedorId: 5,
+        idPago: 4,
+        clienteId: 6,
+        direccionId: 2,
         descuento: 0.12,
         IV: 0.13,
         subtotal: 30000,
-        estado: "Entregado"
+        estado: "Entregado",
+        Total: 25000
       }
     })
 
     await prisma.pedido.create({
       data: {
-        vendedorId: 3,
+        idPago: 4,
+        clienteId: 6,
+        direccionId: 2,
         descuento: 0.12,
         IV: 0.13,
         subtotal: 120000,
-        estado: "Finalizado"
+        estado: "Finalizado",
+        Total: 113000
       }
     })
 
     await prisma.pedido.create({
       data: {
-        vendedorId: 5,
+        idPago: 4,
+        clienteId: 6,
+        direccionId: 2,
         descuento: 0.12,
         IV: 0.13,
         subtotal: 30000,
-        estado: "Pendiente"
+        estado: "Finalizado",
+        Total: 113000
       }
-    })
-
+    })  
+    
     await prisma.pedidoRopa.create({
       data:{
         idRopa: 1,
@@ -400,126 +494,22 @@ async function main() {
       }
     })
 
-    await prisma.compra.create({
-        data: {
-          clienteId: 4,
-          Total: 190000,
-          metodos: {
-            connect:{id:1}
-          },
-          pedidos: {
-            connect:[{id:1},{id:2}]
-          }
-        }
-    })
-
-    await prisma.compra.create({
-      data: {
-        clienteId: 4,
-        Total: 80000,
-        metodos: {
-          connect:{id:2}
-        },
-        pedidos: {
-          connect:[{id:3}]
-        }
-      }
-    }) 
-
-    await prisma.compra.create({
-      data: {
-        clienteId: 4,
-        Total: 80000,
-        metodos: {
-          connect:{id:2}
-        },
-        pedidos: {
-          connect:[{id:4}]
-        }
-      }
-    }) 
-
-    await prisma.compra.create({
-      data: {
-        clienteId: 4,
-        Total: 80000,
-        metodos: {
-          connect:{id:2}
-        },
-        pedidos: {
-          connect:[{id:4}]
-        }
-      }
-    }) 
-
-    await prisma.compra.create({
-      data: {
-        clienteId: 6,
-        Total: 80000,
-        metodos: {
-          connect:{id:2}
-        },
-        pedidos: {
-          connect:[{id:7}]
-        }
-      }
-    }) 
-
-    await prisma.compra.create({
-      data: {
-        clienteId: 7,
-        Total: 80000,
-        metodos: {
-          connect:{id:2}
-        },
-        pedidos: {
-          connect:[{id:6}]
-        }
-      }
-    }) 
-
-    await prisma.direccion.create({
+    await prisma.evaluacion.create({
       data:{
-        usuarioId: 4,
-        provincia: "Alajuela",
-        canton: "San Carlos",
-        distrito: "Ciudad Quesada",
-        direccionExacta: "3 mts oeste",
-        codPostal: "313233",
-        telef: "89882112"
-      }
-    })
-
-    await prisma.direccion.create({
-      data:{
+        nombre: "Jimena Valenzuela",
         usuarioId: 1,
-        provincia: "Alajuela",
-        canton: "Alajuela",
-        distrito: "Alajuela",
-        direccionExacta: "4 mts este",
-        codPostal: "313234",
-        telef: "89888788"
-      }
-    })
-
-    await prisma.direccion.create({
-      data:{
-        usuarioId: 2,
-        provincia: "San Jose",
-        canton: "Perez Zeledon",
-        distrito: "Rivas",
-        direccionExacta: "5 mts norte",
-        codPostal: "383232",
-        telef: "89886776"
+        pedidoId: 1,
+        usuarioRol: "Vendedor",
+        nota: 90
       }
     })
 
     await prisma.evaluacion.create({
       data:{
-        nombre: "Pedro Jose",
+        nombre: "Jimena Valenzuela",
         usuarioId: 1,
-        compraId: 1,
-        usuarioRol: "Administrador",
+        pedidoId: 1,
+        usuarioRol: "Vendedor",
         nota: 90
       }
     })
@@ -528,7 +518,7 @@ async function main() {
       data:{
         nombre: "Maria Jose",
         usuarioId: 2,
-        compraId: 2,
+        pedidoId: 2,
         usuarioRol: "Vendedor",
         nota: 70
       }

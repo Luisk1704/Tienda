@@ -20,18 +20,20 @@ model Proveedor{
 
 model Ropa{
   id Int @id  @default(autoincrement())
+  vendedorId Int
+  nombre String
   precio Decimal
   estado String
   cantidad Int
   proveedorId Int
   proveedor Proveedor @relation(fields: [proveedorId],references: [id])
+  vendedor Usuario @relation(fields: [vendedorId],references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
   categorias Categoria[] 
   fotos Foto[]
   ordenes PedidoRopa[]
   preguntas Pregunta[]
-  usuarios Usuario[]
 }
 
 model PedidoRopa{
@@ -48,29 +50,22 @@ model PedidoRopa{
 
 model Pedido{
   id Int @id @default(autoincrement())
-  vendedorId Int 
+  idPago Int
+  clienteId Int
+  direccionId Int 
   descuento Decimal
   IV Decimal
   estado String
   subtotal Decimal
-  ropas PedidoRopa[]
-  compras Compra[]
-  usuario Usuario @relation(fields: [vendedorId],references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
-}
-
-model Compra{
-  id Int @id @default(autoincrement())
-  fecha DateTime @default(now())
   Total Decimal
-  clienteId Int
+  fecha DateTime @default(now())
+  ropas PedidoRopa[]
+  evaluaciones Evaluacion[]
+  direccion Direccion @relation(fields: [direccionId],references: [id])  
+  metodo MetodoPago @relation(fields: [idPago],references: [id])
   usuario Usuario @relation(fields: [clienteId],references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
-  metodos MetodoPago[]
-  evaluaciones Evaluacion[]
-  pedidos Pedido[]
 }
 
 model Usuario{
@@ -85,23 +80,22 @@ model Usuario{
   rol Rol @relation(fields: [rolId],references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
+  metodos MetodoPago[]
   pedidos Pedido[]
   direcciones Direccion[]
   preguntas Pregunta[]
   respuestas Respuesta[]
   informes Informe[]
   evaluaciones Evaluacion[]
-  metodos MetodoPago[]
-  compras Compra[]
   ropas Ropa[]
 }
 
 model MetodoPago{
   id Int @id @default(autoincrement())
+  idCliente Int
   descripcion String
-  usuarioId Int
-  usuario Usuario @relation(fields: [usuarioId], references: [id])
-  compras Compra[]
+  usuario Usuario @relation(fields: [idCliente],references: [id])
+  pedidos Pedido[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
 }
@@ -141,12 +135,12 @@ model Evaluacion{
   id Int @id @default(autoincrement())
   nombre String
   usuarioId Int
-  compraId Int
+  pedidoId Int
   nota Int
   descripcion String?
   usuarioRol String
   usuario Usuario @relation(fields: [usuarioId],references: [id])
-  compra Compra @relation(fields: [compraId], references: [id])
+  pedido Pedido @relation(fields: [pedidoId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
 }
@@ -177,6 +171,7 @@ model Direccion{
   direccionExacta String
   codPostal String
   telef String
+  pedidos Pedido[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now()) 
 }

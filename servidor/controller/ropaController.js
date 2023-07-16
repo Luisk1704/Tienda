@@ -28,11 +28,7 @@ module.exports.getByVendedor = async(request,response,next) => {
     let vendedor = parseInt(request.params.id)
     const ropas = await prisma.ropa.findMany({
         where:{
-            usuarios:{
-                some:{
-                    id: vendedor
-                }
-            }
+            vendedorId: vendedor
         }, 
         include: {
             proveedor: {
@@ -45,7 +41,7 @@ module.exports.getByVendedor = async(request,response,next) => {
                     descripcion: true
                 }
             },
-            usuarios: {
+            vendedor:{
                 select:{
                     nombre: true
                 }

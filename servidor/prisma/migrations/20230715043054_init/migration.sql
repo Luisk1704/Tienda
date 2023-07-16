@@ -11,6 +11,8 @@ CREATE TABLE `Proveedor` (
 -- CreateTable
 CREATE TABLE `Ropa` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `vendedorId` INTEGER NOT NULL,
+    `nombre` VARCHAR(191) NOT NULL,
     `precio` DECIMAL(65, 30) NOT NULL,
     `estado` VARCHAR(191) NOT NULL,
     `cantidad` INTEGER NOT NULL,
@@ -37,23 +39,15 @@ CREATE TABLE `PedidoRopa` (
 -- CreateTable
 CREATE TABLE `Pedido` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `vendedorId` INTEGER NOT NULL,
+    `idPago` INTEGER NOT NULL,
+    `clienteId` INTEGER NOT NULL,
+    `direccionId` INTEGER NOT NULL,
     `descuento` DECIMAL(65, 30) NOT NULL,
     `IV` DECIMAL(65, 30) NOT NULL,
     `estado` VARCHAR(191) NOT NULL,
     `subtotal` DECIMAL(65, 30) NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Compra` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `fecha` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `Total` DECIMAL(65, 30) NOT NULL,
-    `clienteId` INTEGER NOT NULL,
+    `fecha` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
@@ -79,8 +73,8 @@ CREATE TABLE `Usuario` (
 -- CreateTable
 CREATE TABLE `MetodoPago` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `idCliente` INTEGER NOT NULL,
     `descripcion` VARCHAR(191) NOT NULL,
-    `usuarioId` INTEGER NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
@@ -126,7 +120,7 @@ CREATE TABLE `Evaluacion` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `nombre` VARCHAR(191) NOT NULL,
     `usuarioId` INTEGER NOT NULL,
-    `compraId` INTEGER NOT NULL,
+    `pedidoId` INTEGER NOT NULL,
     `nota` INTEGER NOT NULL,
     `descripcion` VARCHAR(191) NULL,
     `usuarioRol` VARCHAR(191) NOT NULL,
@@ -184,33 +178,6 @@ CREATE TABLE `Foto` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `_RopaToUsuario` (
-    `A` INTEGER NOT NULL,
-    `B` INTEGER NOT NULL,
-
-    UNIQUE INDEX `_RopaToUsuario_AB_unique`(`A`, `B`),
-    INDEX `_RopaToUsuario_B_index`(`B`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `_CompraToMetodoPago` (
-    `A` INTEGER NOT NULL,
-    `B` INTEGER NOT NULL,
-
-    UNIQUE INDEX `_CompraToMetodoPago_AB_unique`(`A`, `B`),
-    INDEX `_CompraToMetodoPago_B_index`(`B`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `_CompraToPedido` (
-    `A` INTEGER NOT NULL,
-    `B` INTEGER NOT NULL,
-
-    UNIQUE INDEX `_CompraToPedido_AB_unique`(`A`, `B`),
-    INDEX `_CompraToPedido_B_index`(`B`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `_PreguntaToRespuesta` (
     `A` INTEGER NOT NULL,
     `B` INTEGER NOT NULL,
@@ -232,22 +199,28 @@ CREATE TABLE `_CategoriaToRopa` (
 ALTER TABLE `Ropa` ADD CONSTRAINT `Ropa_proveedorId_fkey` FOREIGN KEY (`proveedorId`) REFERENCES `Proveedor`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `Ropa` ADD CONSTRAINT `Ropa_vendedorId_fkey` FOREIGN KEY (`vendedorId`) REFERENCES `Usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `PedidoRopa` ADD CONSTRAINT `PedidoRopa_idPedido_fkey` FOREIGN KEY (`idPedido`) REFERENCES `Pedido`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `PedidoRopa` ADD CONSTRAINT `PedidoRopa_idRopa_fkey` FOREIGN KEY (`idRopa`) REFERENCES `Ropa`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Pedido` ADD CONSTRAINT `Pedido_vendedorId_fkey` FOREIGN KEY (`vendedorId`) REFERENCES `Usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Pedido` ADD CONSTRAINT `Pedido_direccionId_fkey` FOREIGN KEY (`direccionId`) REFERENCES `Direccion`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Compra` ADD CONSTRAINT `Compra_clienteId_fkey` FOREIGN KEY (`clienteId`) REFERENCES `Usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Pedido` ADD CONSTRAINT `Pedido_idPago_fkey` FOREIGN KEY (`idPago`) REFERENCES `MetodoPago`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Pedido` ADD CONSTRAINT `Pedido_clienteId_fkey` FOREIGN KEY (`clienteId`) REFERENCES `Usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_rolId_fkey` FOREIGN KEY (`rolId`) REFERENCES `Rol`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `MetodoPago` ADD CONSTRAINT `MetodoPago_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `MetodoPago` ADD CONSTRAINT `MetodoPago_idCliente_fkey` FOREIGN KEY (`idCliente`) REFERENCES `Usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Pregunta` ADD CONSTRAINT `Pregunta_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -265,31 +238,13 @@ ALTER TABLE `Informe` ADD CONSTRAINT `Informe_usuarioId_fkey` FOREIGN KEY (`usua
 ALTER TABLE `Evaluacion` ADD CONSTRAINT `Evaluacion_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Evaluacion` ADD CONSTRAINT `Evaluacion_compraId_fkey` FOREIGN KEY (`compraId`) REFERENCES `Compra`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Evaluacion` ADD CONSTRAINT `Evaluacion_pedidoId_fkey` FOREIGN KEY (`pedidoId`) REFERENCES `Pedido`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Direccion` ADD CONSTRAINT `Direccion_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Foto` ADD CONSTRAINT `Foto_ropaId_fkey` FOREIGN KEY (`ropaId`) REFERENCES `Ropa`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_RopaToUsuario` ADD CONSTRAINT `_RopaToUsuario_A_fkey` FOREIGN KEY (`A`) REFERENCES `Ropa`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_RopaToUsuario` ADD CONSTRAINT `_RopaToUsuario_B_fkey` FOREIGN KEY (`B`) REFERENCES `Usuario`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_CompraToMetodoPago` ADD CONSTRAINT `_CompraToMetodoPago_A_fkey` FOREIGN KEY (`A`) REFERENCES `Compra`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_CompraToMetodoPago` ADD CONSTRAINT `_CompraToMetodoPago_B_fkey` FOREIGN KEY (`B`) REFERENCES `MetodoPago`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_CompraToPedido` ADD CONSTRAINT `_CompraToPedido_A_fkey` FOREIGN KEY (`A`) REFERENCES `Compra`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_CompraToPedido` ADD CONSTRAINT `_CompraToPedido_B_fkey` FOREIGN KEY (`B`) REFERENCES `Pedido`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `_PreguntaToRespuesta` ADD CONSTRAINT `_PreguntaToRespuesta_A_fkey` FOREIGN KEY (`A`) REFERENCES `Pregunta`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

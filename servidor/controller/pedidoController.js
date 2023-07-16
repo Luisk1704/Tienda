@@ -13,60 +13,44 @@ module.exports.getByIdvendedor = async(request,response,next) => {
             ropas:{
                 some:{
                     ropa:{
-                        usuarios:{
-                            some:{
-                                id:id
-                            }
-                        }
+                        vendedorId: id
                     }
                 }
             }
         },
-        include: {
-            compras:{
-                include:{
-                    usuario:true,
-                    metodos:true
-                }
-            },
+        include: {            
             ropas:  {
                 include:{
                     ropa:{
                         include:{
                             categorias: true,
-                            usuarios:true
+                            vendedor: true
                         }
                     }
                 }
-            }
-        }
+            },
+            metodo: true
+        },
     })
     response.json(pedido)
 }
+
+
 
 module.exports.getByIdcliente = async(request,response,next) => {
     let id = parseInt(request.params.id)
     const pedido = await prisma.pedido.findMany({      
         where:{
-            compras:{
-                some:{
-                    clienteId:id
-                }
-            }
+            clienteId:id
         },
         include: {
-            compras:{
-                include:{
-                    usuario:true,
-                    metodos:true
-                }
-            },
+            metodo: true,
             ropas:  {
                 include:{
                     ropa:{
                         include:{
                             categorias: true,
-                            usuarios:true
+                            vendedor:true
                         }
                     }
                 }
@@ -81,16 +65,8 @@ module.exports.getById = async(request,response,next) => {
     const pedido = await prisma.pedido.findUnique({
         where: {id:id},
         include: {
-            compras:{
-                include:{
-                    usuario:{
-                        include:{
-                            direcciones:true
-                        }
-                    },
-                    metodos:true
-                }
-            },
+            metodo: true,
+            direccion: true,
             ropas:  {
                 include:{
                     ropa:{
@@ -104,7 +80,8 @@ module.exports.getById = async(request,response,next) => {
                         }
                     }
                 }
-            }
+            },
+            usuario:true
         }
     })
     response.json(pedido)
