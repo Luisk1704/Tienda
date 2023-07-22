@@ -1,7 +1,7 @@
 <div class="cuerpo">
     <mat-card *ngIf="datos">
         <mat-card-content>
-            <div class="celda">                
+            <div class="celda">
                 <mat-card-header class="celda encabezado">
                     <strong>Pedido #&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.id}}
                 </mat-card-header>
@@ -11,47 +11,49 @@
                 <mat-card-header class="celda encabezado">
                     <strong>Direccion&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.direccion.distrito}},
                     {{datos.direccion.canton}},{{datos.direccion.provincia}}.{{datos.direccion.direccionExacta}}
-                    
+
                 </mat-card-header>
                 <mat-card-header class="celda encabezado">
                     <strong>Metodo pago&nbsp;&nbsp;|&nbsp;&nbsp;</strong>{{datos.metodo.descripcion}}
-                </mat-card-header>   
+                </mat-card-header>
                 <mat-card-content class="pedido">
                     <table class="tabla">
                         <thead>
-                          <tr class="registro">
-                            <th scope="col">#</th>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Marca</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Subtotal</th>
-                          </tr>
+                            <tr class="registro">
+                                <th scope="col">#</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Marca</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Subtotal</th>
+                            </tr>
                         </thead>
                         <tbody *ngFor="let item of datos.ropas">
                             <tr class="registro">
-                                <td >{{item.id}}</td>
-                                <td >{{item.ropa.nombre}}</td>
-                                <td >{{item.ropa.proveedor.nombre}}</td>
-                                <td >{{item.cantidad}}</td>
-                                <td >{{item.subtotal | currency: 'CRC':'symbol-narrow'}}</td>
-                            </tr>                                                        
+                                <td>{{item.id}}</td>
+                                <td>{{item.ropa.nombre}}</td>
+                                <td>{{item.ropa.proveedor.nombre}}</td>
+                                <td>{{item.cantidad}}</td>
+                                <td>{{item.subtotal | currency: 'CRC':'symbol-narrow'}}</td>
+                            </tr>
                         </tbody>
-                        <tr><td></td><td></td><td></td><td style="color: blueviolet; font-size: large;"><strong>Total:</strong></td><td style="font-size: large;">{{datos.subtotal | currency: 'CRC':'symbol-narrow'}}</td></tr>
-                    </table>                    
-                </mat-card-content>                             
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="color: blueviolet; font-size: large;"><strong>Total:</strong></td>
+                            <td style="font-size: large;">{{datos.subtotal | currency: 'CRC':'symbol-narrow'}}</td>
+                        </tr>
+                    </table>
+                </mat-card-content>
                 <br>
                 <br>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <a class="regresar" [routerLink]="['/pedido/lista-cliente']">
-                            Regresar Cliente
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        <a class="regresar" [routerLink]="['/pedido/lista-vendedor']">
-                            Regresar Vendedor
-                        </a>
-                    </div>
+                <div>
+                    <a class="regresar" [routerLink]="['/pedido/lista-cliente']">
+                        Regresar Cliente
+                    </a>
+                    <a class="regresar" [routerLink]="['/pedido/lista-vendedor']">
+                        Regresar Vendedor
+                    </a>                    
                 </div>
             </div>
         </mat-card-content>

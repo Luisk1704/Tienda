@@ -37,7 +37,7 @@ export class ListaPedidoClienteComponent implements AfterViewInit {
   listaVendedor(){
     //localhost:3000/videojuego/
     this.gService
-      .list('pedido/cliente/4')
+      .list('pedido/cliente/6')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         console.log(data);

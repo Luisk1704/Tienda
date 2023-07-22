@@ -14,6 +14,7 @@ import { GenericService } from 'src/app/share/generic.service';
 export class ListaPedidoVendedorComponent implements AfterViewInit {
   datos:any;//Guarda la respuesta del API
   destroy$: Subject<boolean>=new Subject<boolean>();
+  indices:String = ""
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -41,6 +42,9 @@ export class ListaPedidoVendedorComponent implements AfterViewInit {
       .subscribe((data:any)=>{
         console.log(data);
         this.datos=data;
+        for (let i = 0; i < data.length; i++) {
+          this.indices += ""+i;          
+        }
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;       
