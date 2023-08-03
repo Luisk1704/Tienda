@@ -1,0 +1,32 @@
+<div class="cuerpo">
+    <form [formGroup]="respForm" (ngSubmit)="crearRespuesta()" novalidate enctype="multipart/form-data">
+        <input type="hidden" formControlName="id" />        
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Realizar pregunta</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Descripcion" formControlName="descripcion">
+                            <mat-error *ngIf="errorHandling('descripcion','required')">
+                                Pregunta es <strong>requerido</strong>
+                            </mat-error>
+                            <mat-error *ngIf="errorHandling('descripcion','minLength')">
+                                Pregunta debe tener <strong>3 caracteres</strong>
+                            </mat-error>
+                            <mat-error *ngIf="errorHandling('descripcion','maxLength')">
+                                Pregunta debe tener menos de<strong>20 caracteres</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>                
+            </mat-card-content>            
+            <mat-card-actions>
+                <button mat-raised-button class="boton" type="submit">Guardar</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>
+

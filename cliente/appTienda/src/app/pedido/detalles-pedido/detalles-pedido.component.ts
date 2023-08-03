@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject , takeUntil} from 'rxjs';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class DetallesPedidoComponent {
   destroy$: Subject<boolean>=new Subject<boolean>();
 
   constructor(private gService: GenericService,
+    private authService: AuthenticationService,
     private route: ActivatedRoute
     ){
       

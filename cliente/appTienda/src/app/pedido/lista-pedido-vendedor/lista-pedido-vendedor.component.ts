@@ -40,7 +40,9 @@ export class ListaPedidoVendedorComponent implements AfterViewInit {
       .list('pedido/vendedor/2')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
-        console.log(data);
+        if (data == null) {
+          console.log("hola")
+        }
         this.datos=data;
         for (let i = 0; i < data.length; i++) {
           this.indices += ""+i;          

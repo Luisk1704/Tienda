@@ -1,17 +1,20 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject , takeUntil} from 'rxjs';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
+import { HttpErrorInterceptorService } from 'src/app/share/http-error-interceptor.service';
 
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
   styleUrls: ['./lista.component.css']
 })
-export class ListaComponent implements AfterViewInit {
+export class ListaComponent implements AfterViewInit, OnInit {
+  currentUser:any
   datos:any;//Guarda la respuesta del API
   destroy$: Subject<boolean>=new Subject<boolean>();
 
@@ -24,25 +27,32 @@ export class ListaComponent implements AfterViewInit {
   displayedColumns = ['id','descripcion','precio','estado','acciones'];
 
   constructor(private gService:GenericService,
+    private authService: AuthenticationService,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private http: HttpErrorInterceptorService) {
 
   }
 
+  ngOnInit(): void {
+    this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+  }
+
   ngAfterViewInit(): void {
+    this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
     this.listaVendedor();
   }
   //Llamar al API y obtener la lista de videojuegos
   listaVendedor(){
     //localhost:3000/videojuego/
     this.gService
-      .list('ropa/vendedor/5')
+      .list('ropa/vendedor/'+this.currentUser.user.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
-        console.log(data);
         this.datos=data;
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;
+        console.log(this.http)
         //this.dataSource.paginator = this.paginator;       
       })
   }
@@ -53,6 +63,21 @@ export class ListaComponent implements AfterViewInit {
       relativeTo:this.route
     })
   }
+
+  actualizarProducto(id:Number){
+    this.router.navigate(['/ropa/crear-ropa',id],
+    {
+      relativeTo:this.route
+    })
+  }
+
+  crearRopa(){
+    this.router.navigate(['/ropa/crear-ropa'],
+    {
+      relativeTo:this.route
+    })
+  }
+
   ngOnDestroy(){
     this.destroy$.next(true);
     this.destroy$.unsubscribe();

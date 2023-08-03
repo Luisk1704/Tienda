@@ -6,6 +6,25 @@ module.exports.get = async(request,response,next) => {
     response.json(pedidos)
 }
 
+module.exports.crear = async(request,response,next) =>{
+    let pedido = request.body
+    const crear = await prisma.pedido.create({
+        data:{
+            idPago: pedido.idPago,
+            clienteId: pedido.clienteId,
+            direccionId: pedido.direccionId, 
+            descuento: 0.12,
+            IV: 0.13,
+            estado: 'pendiente',
+            subtotal: pedido.subtotal,
+            Total: pedido.Total,
+            ropas:{
+                connect: pedido.ropas
+            }
+        }
+    })
+}
+
 module.exports.getByIdvendedor = async(request,response,next) => {
     let id = parseInt(request.params.id)
     const pedido = await prisma.pedido.findMany({      

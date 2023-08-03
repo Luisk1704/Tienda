@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListaComponent } from './lista-usuario/lista.component';
 import { DetallesComponent } from './detalles-usuario/detalles.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
 
   {path:'usuario/lista', component: ListaComponent},
+
+  {path:'usuario/login', component: LoginComponent},
 
   {path:'usuario/:id', component: DetallesComponent},
 

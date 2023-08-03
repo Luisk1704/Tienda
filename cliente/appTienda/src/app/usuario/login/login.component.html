@@ -1,0 +1,53 @@
+<div class="cuerpo">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col">
+      <form [formGroup]="formulario" novalidate>
+        <mat-card class="shipping-card">
+          <mat-card-header>
+            <mat-card-title>Login Usuario </mat-card-title>
+          </mat-card-header>
+          <br>
+          <mat-card-content>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput type="text" placeholder="Email usuario" formControlName="correo" />
+                  <mat-error *ngIf="errorHandling('correo', 'required')">
+                    Email es <strong>requerido</strong>
+                  </mat-error>
+                  <mat-error *ngIf="errorHandling('correo','email')">
+                    Verifique el <strong>formato</strong> del email
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input width="100%" matInput [type]="hide? 'password' : 'text'" placeholder="Contraseña"
+                    formControlName="contrasenna" />
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-error *ngIf="errorHandling('contrasenna', 'required')">
+                    Password es <strong>requerido</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button class="boton" color="primary" (click)="submitForm()">Login</button>
+            <button class="boton" color="accent" type="reset" (click)="onReset()">Cancelar</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>  
+</div>
+  

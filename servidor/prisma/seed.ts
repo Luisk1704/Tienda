@@ -1,8 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Rol } from "@prisma/client";
 import { categorias } from "./seeds/categorias";
-import { roles } from "./seeds/roles"
+//import { roles } from "./seeds/roles"
 import { metodosPago } from "./seeds/metodosPago";
 import { proveedores } from "./seeds/proveedores";
+const bcrypt = require("bcrypt");
+let salt= bcrypt.genSaltSync(10);
 /*
 import { parse } from "url";
 import { decompressFromBase64 } from "@prisma/client/runtime";
@@ -15,9 +17,9 @@ async function main() {
         data: categorias
     })
 
-    await prisma.rol.createMany({
+    /*await prisma.rol.createMany({
         data: roles
-    })
+    })*/
 
     await prisma.proveedor.createMany({
       data: proveedores
@@ -29,9 +31,9 @@ async function main() {
         cedula: '207240989',
         telefono: '89763823',
         correo: 'lamoresvi@gmail.com',
-        contrasenna: '123',
+        contrasenna: bcrypt.hashSync('123456',salt),
         estado: true,
-        rolId: 1  
+        rol: Rol.ADMINISTRADOR
       }
     })
 
@@ -41,9 +43,9 @@ async function main() {
         cedula: '207243838',
         telefono: '83500664',
         correo: 'juanAV@gmail.com',
-        contrasenna: '1234',
+        contrasenna: bcrypt.hashSync('123456',salt),
         estado: true,
-        rolId: 2  
+        rol: Rol.VENDEDOR  
       }
     })
 
@@ -53,9 +55,9 @@ async function main() {
         cedula: '2075454544',
         telefono: '83454545',
         correo: 'jos@gmail.com',
-        contrasenna: '12345',
+        contrasenna: bcrypt.hashSync('123456',salt),
         estado: true,
-        rolId: 2  
+        rol: Rol.VENDEDOR  
       }
     })
 
@@ -65,9 +67,9 @@ async function main() {
         cedula: '2075453333',
         telefono: '83453534',
         correo: 'jen@gmail.com',
-        contrasenna: '123456',
+        contrasenna: bcrypt.hashSync('123456',salt),
         estado: true,
-        rolId: 3  
+        rol: Rol.CLIENTE  
       }
     })
 
@@ -77,9 +79,9 @@ async function main() {
         cedula: '23232434343',
         telefono: '87877878',
         correo: 'Jimena@gmail.com',
-        contrasenna: '123',
+        contrasenna: bcrypt.hashSync('123456',salt),
         estado: true,
-        rolId: 2  
+        rol: Rol.VENDEDOR  
       }
     })
 
@@ -89,9 +91,9 @@ async function main() {
         cedula: '32434343',
         telefono: '88888888',
         correo: 'Oscar@gmail.com',
-        contrasenna: '1235',
+        contrasenna: bcrypt.hashSync('123456',salt),
         estado: true,
-        rolId: 3  
+        rol: Rol.CLIENTE  
       }
     })
 
@@ -101,9 +103,9 @@ async function main() {
         cedula: '454545454',
         telefono: '999977777',
         correo: 'Jaime@gmail.com',
-        contrasenna: '124578',
+        contrasenna: bcrypt.hashSync('123456',salt),
         estado: true,
-        rolId: 3  
+        rol: Rol.CLIENTE  
       }
     })
 
@@ -170,7 +172,7 @@ async function main() {
       }
     })
 
-    await prisma.ropa.create({
+    /*await prisma.ropa.create({
       data: {
         nombre: "Camisa",
         cantidad: 50,        
@@ -280,7 +282,7 @@ async function main() {
           connect: [{id: 18} , { id: 20}]
         }
       }
-    })       
+    })*/       
 
     await prisma.direccion.create({
       data:{
@@ -318,7 +320,7 @@ async function main() {
       }
     })
 
-    await prisma.pedido.create({
+    /*await prisma.pedido.create({
       data: {
         idPago: 1,
         clienteId: 4,

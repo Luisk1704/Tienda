@@ -9,17 +9,18 @@ import { HomeModule } from './home/home.module';
 import { ProductoModule } from './ropa/producto.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { PedidoModule } from './pedido/pedido.module'
-
+import { MatFormField } from '@angular/material/form-field';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,    
   ],
   imports: [
-    BrowserModule,    
+    BrowserModule,        
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     CoreModule,
@@ -32,7 +33,11 @@ import { PedidoModule } from './pedido/pedido.module'
     MatTableModule,   
     AppRoutingModule  
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptorService, multi: true 
+  }],
+  bootstrap: [AppComponent],
+  exports: [
+  ]
 })
 export class AppModule { }

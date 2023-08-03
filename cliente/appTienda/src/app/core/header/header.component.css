@@ -22,3 +22,31 @@ a:hover{
     border-bottom: solid violet 2px;
     border-radius: 5px;
 }
+
+.boton{
+    font-size: medium;
+    text-decoration: none;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-top: solid transparent 2px;
+    border-left: solid transparent 2px;
+    border-right: solid transparent 2px;
+    border-bottom: solid transparent 2px;
+    margin-left: 5px;
+    margin-right: 20px;
+}
+
+.boton:hover{
+    font-size: medium;
+    text-decoration: none;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-top: solid violet 2px;
+    border-left: solid violet 2px;
+    border-right: solid violet 2px;
+    border-bottom: solid violet 2px;
+    margin-left: 5px;
+    margin-right: 20px;
+}

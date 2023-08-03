@@ -1,54 +1,60 @@
 <div class="cuerpo">
-    <mat-card>
-      <table mat-table [dataSource]="dataSource" class="tabla">
-  
-        <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> Id </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-        </ng-container>
-        <!-- Position Column -->
-        <ng-container matColumnDef="descripcion">
-          <th mat-header-cell *matHeaderCellDef> Descripcion </th>
-          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-        </ng-container>
-  
-        <!-- Name Column -->
-        <ng-container matColumnDef="precio">
-          <th mat-header-cell *matHeaderCellDef> Precio </th>
-          <td mat-cell *matCellDef="let element"> {{element.precio | currency  : 'CRC':'symbol-narrow'}} </td>
-        </ng-container>
-  
-        <!-- Weight Column -->
-        <ng-container matColumnDef="estado">
-          <th mat-header-cell *matHeaderCellDef> Estado </th>
-          <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
-        </ng-container>
+  <mat-card>
+    <br>
+    <a class="boton" mat-fab matTooltip="Detalle Pedido" aria-label="Detalle Pedido" color="primary"
+      (click)="crearRopa()"><mat-icon><strong>add</strong></mat-icon>     
+    </a>
+    <br>
+    <table mat-table [dataSource]="dataSource" class="tabla">
 
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef >Acciones</th>
-          <td mat-cell *matCellDef="let element">
-            <!--<a
-              mat-fab
-              matTooltip="Actualizar Producto"
-              aria-label="Actualizar Producto"
-              color="primary"
-            >
-              <mat-icon>edit</mat-icon>
-            </a>-->
-            <div class="acciones">
-              <a mat-fab matTooltip="Detalle Pedido" aria-label="Detalle Pedido" color="primary"
+      <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+      <!-- Position Column -->
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef> Precio </th>
+        <td mat-cell *matCellDef="let element"> {{element.precio | currency : 'CRC':'symbol-narrow'}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element" class="row">
+          <div class="col row">
+            <div class="acciones-ac col">
+              <a mat-fab matTooltip="Actualizar Ropa" aria-label="Actualizar Ropa" color="primary"
+                (click)="actualizarProducto(element.id)">
+                <mat-icon>edit</mat-icon>
+              </a>
+            </div>
+            <div class="acciones-ac col">
+              <a mat-fab matTooltip="Detalle Ropa" aria-label="Detalle Ropa" color="primary"
                 (click)="detalleProducto(element.id)">
                 <mat-icon>info</mat-icon>
               </a>
-            </div>              
-            
-          </td>
-        </ng-container>
-  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
-      </table>
-    </mat-card>
-  </div>
+            </div>
+          </div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>

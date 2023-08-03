@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './home/inicio/inicio.component';
 import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
+import { HeaderComponent } from './core/header/header.component';
 
 const routes: Routes = [
+  { path:'header',component: HeaderComponent},
   { path:'inicio',component: InicioComponent},
   { path:'', redirectTo:'/inicio' ,pathMatch:'full'},
   { path:'**',component:PageNotFoundComponent}

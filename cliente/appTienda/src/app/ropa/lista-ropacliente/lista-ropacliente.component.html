@@ -1,12 +1,19 @@
 <div class="cuerpo">
     <div class="tabla">
-        <mat-grid-list [cols]="4" rowHeight="13em" gutterSize="10px" *ngIf="datos">
+        <mat-grid-list [cols]="5" rowHeight="13em" gutterSize="10px" *ngIf="datos">
             <mat-grid-tile *ngFor="let item of datos">            
                     <mat-card>
-                        <button (click)="detalleProducto(item.id)">
-                            <mat-card-header><strong>{{item.categorias[0].descripcion}} &nbsp;&nbsp;|</strong>&nbsp;&nbsp;{{item.proveedor.nombre}}</mat-card-header>
-                            <mat-card-content><mat-card-header>{{item.precio | currency: 'CRC': 'symbol-narrow'}}</mat-card-header></mat-card-content>
-                        </button>                    
+                        <mat-card-header><strong>{{item.nombre}} &nbsp;&nbsp;|</strong>&nbsp;&nbsp;{{item.proveedor.nombre}}</mat-card-header>
+                        <mat-card-content><mat-card-header>{{item.precio | currency: 'CRC': 'symbol-narrow'}}</mat-card-header></mat-card-content>
+                        <br>
+                        <mat-card-actions>
+                            <button mat-mini-fab (click)="detalleProducto(item.id)">           
+                                <mat-icon>info</mat-icon>
+                            </button>
+                            <button mat-mini-fab (click)="preguntas(item.id)">           
+                                <mat-icon>question_mark</mat-icon>
+                            </button> 
+                        </mat-card-actions>                                                         
                     </mat-card>            
             </mat-grid-tile>
         </mat-grid-list>

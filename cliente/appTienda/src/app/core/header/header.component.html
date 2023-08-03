@@ -4,18 +4,25 @@
             <mat-icon>menu</mat-icon>
         </button>-->
         <a [routerLink]="['/inicio']" routerLinkActive="router-link-active" >Inicio</a>
-        <a [routerLink]="['/usuario/lista']" routerLinkActive="router-link-active" >Usuarios</a>
-        <a [routerLink]="['/ropa/lista-vendedor']" routerLinkActive="router-link-active" >Productos</a> 
-        <a [routerLink]="['/ropa/lista-cliente']" routerLinkActive="router-link-active" >Productos Cliente</a>
-        <a [routerLink]="['/pedido/lista-vendedor']" routerLinkActive="router-link-active">Pedidos</a>
-        <a [routerLink]="['/pedido/lista-cliente']" routerLinkActive="router-link-active">Pedidos Cliente</a>
-
+        <a [matMenuTriggerFor]="menu1" [routerLink]="['']" *ngIf="authenticated && (isAdmin || isVend)" routerLinkActive="router-link-active">Mantenimientos
+            <mat-menu #menu1="matMenu">
+                <a *ngIf="authenticated && isAdmin" mat-menu-item [routerLink]="['/usuario/lista']" routerLinkActive="router-link-active" >Usuarios</a>
+                <a *ngIf="authenticated && isVend" mat-menu-item [routerLink]="['/ropa/lista-vendedor']" routerLinkActive="router-link-active" >Productos</a>
+                <a *ngIf="authenticated && isVend" mat-menu-item [routerLink]="['/pedido/lista-vendedor']" routerLinkActive="router-link-active">Pedidos</a>
+            </mat-menu>
+        </a>         
+        <a [routerLink]="['/ropa/lista-cliente']" *ngIf="authenticated && isClient" routerLinkActive="router-link-active" >Tienda</a>        
+        <a [routerLink]="['/pedido/lista-cliente']" *ngIf="authenticated && isClient" routerLinkActive="router-link-active">Mis Pedidos</a>
         <span class="example-spacer"></span>
-        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-            <mat-icon>favorite</mat-icon>
-        </button>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-            <mat-icon>share</mat-icon>
-        </button>
+        <button class="boton" mat-icon-button [routerLink]="['/pedido/procesar']" *ngIf="authenticated && isClient" [matBadge]="cantProd.toString()">
+            <mat-icon>shopping_cart</mat-icon></button>
+        <a [matMenuTriggerFor]="menu2" [routerLink]="['']" *ngIf="authenticated" routerLinkActive="router-link-active">{{currentUser.user.correo}}</a>               
+        <mat-menu #menu2="matMenu">
+            <a mat-menu-item (click)="logout()" routerLinkActive="router-link-active" >Cerrar Sesion <mat-icon>logout</mat-icon></a>
+        </mat-menu>  
+        <a [matMenuTriggerFor]="menu3" *ngIf="!authenticated" [routerLink]="['']" routerLinkActive="router-link-active"><mat-icon>login</mat-icon></a>          
+        <mat-menu #menu3="matMenu">
+            <a mat-menu-item (click)="login()" routerLinkActive="router-link-active" >Iniciar Sesion</a>
+        </mat-menu>
     </mat-toolbar>
 </p>

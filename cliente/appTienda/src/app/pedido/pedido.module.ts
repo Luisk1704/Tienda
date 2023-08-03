@@ -8,10 +8,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { ListaPedidoVendedorComponent } from './lista-pedido-vendedor/lista-pedido-vendedor.component';
 import { ListaPedidoClienteComponent } from './lista-pedido-cliente/lista-pedido-cliente.component';
 import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.component';
+import { ProcesarComponent } from './procesar/procesar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input'; 
 
 @NgModule({
   declarations: [  
-    ListaPedidoVendedorComponent, ListaPedidoClienteComponent, DetallesPedidoComponent
+    ListaPedidoVendedorComponent, ListaPedidoClienteComponent, DetallesPedidoComponent, ProcesarComponent
   ],
   imports: [
     CommonModule,
@@ -19,13 +22,17 @@ import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.compo
     MatTableModule,
     MatCardModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule
   ],
   exports: [
   
     ListaPedidoVendedorComponent,
        ListaPedidoClienteComponent,
-       DetallesPedidoComponent
+       DetallesPedidoComponent,
+       ProcesarComponent
   ]
 })
 export class PedidoModule { }

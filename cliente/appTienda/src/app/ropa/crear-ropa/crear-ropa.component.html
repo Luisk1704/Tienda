@@ -1,0 +1,117 @@
+<div class="cuerpo">
+    <form [formGroup]="ropaForm" (ngSubmit)="Crear? crearRopa(): actualizarRopa()" novalidate enctype="multipart/form-data">
+    <!-- <form action="http://localhost:3000/foto" method="post"  novalidate enctype="multipart/form-data"> -->
+        <input type="hidden" formControlName="id" />
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{titleForm}} Ropa</mat-card-title>
+            </mat-card-header>
+            <br>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="row">                            
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Nombre" formControlName="nombre">
+                                    <mat-error *ngIf="errorHandling('nombre','required')">
+                                        Nombre es <strong>requerido</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="errorHandling('nombre','minLength')">
+                                        Nombre debe tener <strong>3 caracteres</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="errorHandling('nombre','maxLength')">
+                                        Nombre debe tener menos de<strong>20 caracteres</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col" *ngIf="estados">
+                                <mat-form-field class="full-width">
+                                    <mat-select placeholder="Estado" formControlName="estado">
+                                        <mat-option *ngFor="let estado of estados" [value]="estado.value">
+                                            {{estado.viewValue}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="errorHandling('estado','required')">
+                                        Estado es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>                            
+                        </div>
+
+                        <div class="row">                            
+                            <div class="col" *ngIf="proveedores">
+                                <mat-form-field class="full-width">
+                                    <mat-select placeholder="Proveedores" formControlName="proveedorId">
+                                        <mat-option *ngFor="let g of proveedores" [value]="g.id">
+                                            {{g.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="errorHandling('proveedorId','required')">
+                                        Proveedor es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Cantidad" formControlName="cantidad">
+                                    <mat-error *ngIf="errorHandling('cantidad','required')">
+                                        Cantidad es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>                            
+                        </div>
+
+                        <div class="row">                            
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Precio" formControlName="precio">
+                                    <mat-error *ngIf="errorHandling('precio','required')">
+                                        Precio es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col" *ngIf="categorias">
+                                <mat-form-field class="full-width">
+                                    <mat-select placeholder="Categorias" formControlName="categorias" multiple>
+                                        <mat-option *ngFor="let g of categorias" [value]="g.id">
+                                            {{g.descripcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="errorHandling('categorias','required')">
+                                        Categoria es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <input placeholder="Fotos" type="file" class="full-width d-none"
+                            (change)="capturarImagen($event)" #photoInput/>
+                        <input placeholder="Fotos" type="file" class="full-width d-none"
+                            (change)="capturarImagen2($event)" #photoInput2/>
+                        <div class="row">
+                            <div class="col">
+                                <img [src]="fotoselec || 'https://clipground.com/images/no-image-png-5.jpg'"
+                                    style="border-radius: 10px; height: 350px; width: 100%;" (click)="photoInput.click()" />
+                            </div>
+                            <div class="col">
+                                <img [src]="fotoselec2 || 'https://clipground.com/images/no-image-png-5.jpg'"
+                                    style="border-radius: 10px; height: 350px; width: 100%;" (click)="photoInput2.click()" />
+                            </div>
+                        </div>
+                        <br>
+                        <mat-card-header>
+                            <mat-card-title>Selecione fotos del producto</mat-card-title>
+                        </mat-card-header>
+                    </div>
+                </div>
+
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button class="boton" type="submit">Guardar</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>
+

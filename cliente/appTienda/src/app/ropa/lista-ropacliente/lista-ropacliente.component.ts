@@ -50,8 +50,15 @@ export class ListaRopaclienteComponent {
     {      
       relativeTo:this.route
     })
-    console.log(this.router)
   }
+
+  preguntas(id:Number){
+    this.router.navigate(['/ropa/preguntas',id],
+    {      
+      relativeTo:this.route
+    })
+  }
+
   ngOnDestroy(){
     this.destroy$.next(true);
     this.destroy$.unsubscribe();

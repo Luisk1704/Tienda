@@ -10,6 +10,7 @@ table {
 mat-card {
   border: solid 5px rgb(95, 4, 152, .5) !important;
   border-radius: 10px !important;
+  background: linear-gradient(rgba(0, 0, 0), rgba(0, 0, 0, 0.2)) !important;
 }
 
 th {
@@ -36,4 +37,48 @@ td{
   background-color: blueviolet;
   border-radius: 10px !important;
   width: 17%;
+}
+
+.boton{
+  margin: 20px;
+  color: black;
+  text-decoration: none;
+  text-align: center;
+  padding: 9px;
+  border: solid 2.5px blueviolet !important;
+  background-color: blueviolet;
+  border-radius: 10px !important;
+  width: fit-content;
+  height: fit-content;
+}
+
+.boton:hover{
+  margin: 20px;
+  color: blueviolet;
+  text-decoration: none;
+  text-align: center;
+  padding: 9px;
+  border: solid 2.5px blueviolet !important;
+  background-color: black;
+  border-radius: 10px !important;
+  width: fit-content;
+  height: fit-content;
+}
+
+.acciones-ac {
+  padding: 6px;
+  margin-left: 6px;
+  border: solid 2.5px blueviolet !important;
+  background-color: none;
+  border-radius: 10px !important;
+  width: fit-content;
+}
+
+.acciones-ac:hover{
+  padding: 6px;
+  margin-left: 6px;
+  border: solid 2.5px blueviolet !important;
+  background-color: blueviolet;
+  border-radius: 10px !important;
+  width: fit-content;
 }
