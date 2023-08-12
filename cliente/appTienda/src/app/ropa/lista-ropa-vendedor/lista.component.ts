@@ -44,6 +44,7 @@ export class ListaComponent implements AfterViewInit, OnInit {
   }
   //Llamar al API y obtener la lista de videojuegos
   listaVendedor(){
+    console.log(this.currentUser)
     //localhost:3000/videojuego/
     this.gService
       .list('ropa/vendedor/'+this.currentUser.user.id)
@@ -52,7 +53,6 @@ export class ListaComponent implements AfterViewInit, OnInit {
         this.datos=data;
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;
-        console.log(this.http)
         //this.dataSource.paginator = this.paginator;       
       })
   }

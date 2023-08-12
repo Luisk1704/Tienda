@@ -73,15 +73,20 @@ export class RespuestasComponent implements OnInit{
       //Obtener respuesta
       this.respFoto = data;     
       })   */
-      this.router.navigate(['/ropa/lista-vendedor'],{
-        queryParams: {create:'true'}
-      });        
+      // this.router.navigate(['/ropa/lista-vendedor'],{
+      //   queryParams: {create:'true'}
+      // });
+      this.regresar()      
     }) 
   }
   
   public errorHandling = (control: string, error: string) => {
     return this.respForm.controls[control].hasError(error);
   };
+
+  regresar(){
+    history.back()
+  }
 }
 
 

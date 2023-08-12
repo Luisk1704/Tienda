@@ -11,8 +11,8 @@ const cors = require("cors");
 const logger = require("morgan");
 const app = express();
 
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({parameterLimit: 100000,limit: '100mb', extended:true }));
+app.use(bodyParser.urlencoded({ parameterLimit: 100000,limit: '100mb', extended: true }));
 //app.use(express.multipart)
 const prism = new PrismaClient();
 //---Archivos de rutas---

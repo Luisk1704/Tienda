@@ -25,6 +25,7 @@
             </mat-card-content>            
             <mat-card-actions>
                 <button mat-raised-button class="boton" type="submit">Guardar</button>
+                <button class="boton" [routerLink]="['']" routerLinkActive="router-link-active"  (click)="regresar()">Regresar</button>
             </mat-card-actions>
         </mat-card>
     </form>

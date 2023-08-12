@@ -29,7 +29,10 @@ export class HeaderComponent implements OnInit{
     private router: Router,
     private authService: AuthenticationService,
     private http: HttpErrorInterceptorService) {
-    this.cantProd = cartService.quantityItems() 
+    this.cantProd = cartService.quantityItems()
+    this.cartService.countItems.subscribe((value)=>{
+      this.cantProd=value
+     })   
   }  
 
   refrescar(){

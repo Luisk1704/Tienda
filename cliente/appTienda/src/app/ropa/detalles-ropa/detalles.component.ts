@@ -26,6 +26,7 @@ export class DetallesComponent implements OnInit{
   isVend:boolean = false
   isClient:boolean = false
   authenticated: boolean = false
+  id:any
 
 
   constructor(private gService: GenericService,    
@@ -38,11 +39,15 @@ export class DetallesComponent implements OnInit{
       //Obtener el parámetro
       let id=this.route.snapshot.paramMap.get('id');
       if(!isNaN(Number(id))){
-        this.obtenerVideojuego(id);
+        this.obtenerRopa(id);
       }
+      this.id = id
   }
 
   ngOnInit(): void {
+    if(!isNaN(Number(this.id))){
+      this.obtenerRopa(this.id);
+    }
     this.auth.currentUser.subscribe((x)=>{this.currentUser=x;
       if (this.currentUser == null) {
         this.authenticated = false
@@ -70,14 +75,13 @@ export class DetallesComponent implements OnInit{
     });
   }
 
-  obtenerVideojuego(id:any){
+  obtenerRopa(id:any){
     this.gService
     .get('ropa',id)
     .pipe(takeUntil(this.destroy$))
     .subscribe((data:any)=>{
-        this.datos=data; 
-        console.log(this.datos.fotos[0])       
-        this.img =  this.datos.fotos[0] /*.foto /*atob(this.datos.fotos[0].foto)*/
+        this.datos=data;      
+        this.img = this.datos.fotos[0].foto
         if (this.datos.fotos[0] != undefined) {
           this.fotos = true
         } else {
@@ -93,8 +97,28 @@ export class DetallesComponent implements OnInit{
             this.respuestas = false
           }
         }
-    });
-   
+    });   
+  }
+
+  public convertDataUrlToBlob(dataUrl): Blob {
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new Blob([u8arr], {type: mime});
+  }
+
+  realizarPregunta(){
+    this.router.navigate(['/ropa/preguntas',this.id],
+    {      
+      relativeTo:this.route
+    })
   }
 
   responder(id:Number){

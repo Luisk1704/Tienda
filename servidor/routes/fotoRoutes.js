@@ -11,5 +11,6 @@ const fotoController = require("../controller/fotoController")
 
 router.get('/',fotoController.get)
 router.post('/',fotoController.create)
+router.put('/:id',fotoController.update);
 
 module.exports = router

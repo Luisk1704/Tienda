@@ -7,13 +7,9 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class GenericService {
-
-  // URL del API, definida en enviroments->enviroment.ts
   urlAPI: string = environment.apiUrl;
-  //Información usuario actual
   currentUser: any;
 
-  //Inyectar cliente HTTP para las solicitudes al API
   constructor(private http: HttpClient) {
    
   }

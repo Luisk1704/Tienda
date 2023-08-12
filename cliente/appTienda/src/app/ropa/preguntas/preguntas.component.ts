@@ -73,13 +73,15 @@ export class PreguntasComponent implements OnInit{
       //Obtener respuesta
       this.respFoto = data;     
       })   */
-      this.router.navigate(['/ropa/lista-cliente'],{
-        queryParams: {create:'true'}
-      });        
+      this.regresar()       
     }) 
   }
   
   public errorHandling = (control: string, error: string) => {
     return this.pregForm.controls[control].hasError(error);
   };
+
+  regresar(){
+    history.back()
+  }
 }

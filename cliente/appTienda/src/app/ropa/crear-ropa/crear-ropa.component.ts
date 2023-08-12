@@ -52,6 +52,10 @@ export class CrearRopaComponent implements OnInit {
   Crear: boolean = true;
   currentUser:any
   respFoto: any
+  FOTO2:any
+
+  idAct1:number
+  idAct2:number
 
   constructor(
     private fb: FormBuilder,
@@ -87,9 +91,13 @@ export class CrearRopaComponent implements OnInit {
             cantidad:this.ropaInfo.cantidad,
             proveedorId:this.ropaInfo.proveedorId,
             categorias:this.ropaInfo.categorias.map(({id}) => id),            
-            /*foto1:this.ropaInfo.fotos[0],
-            foto2:this.ropaInfo.fotos[1]*/
-          })          
+            foto1:this.ropaInfo.fotos[0].foto,
+            foto2:this.ropaInfo.fotos[1].foto
+          })
+          this.fotoselec =  this.ropaInfo.fotos[0].foto,
+          this.fotoselec2 =  this.ropaInfo.fotos[1].foto
+          this.idAct1 =  this.ropaInfo.fotos[0].id
+          this.idAct2 =  this.ropaInfo.fotos[1].id  
          });
       }
 
@@ -110,8 +118,8 @@ export class CrearRopaComponent implements OnInit {
       estado: [null, Validators.required],
       cantidad: [null, Validators.required],
       proveedorId: [null, Validators.required],
-      /*foto1: [null,null],
-      foto2: [null,null],*/
+      foto1: [null,null],
+      foto2: [null,null],
       categorias: [null, Validators.required],      
     })
   }
@@ -129,9 +137,24 @@ export class CrearRopaComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       this.file2 = event.target.files[0]
       const reader = new FileReader()    
-      reader.onload = (e) => this.fotoselec2 = reader.result
-      reader.readAsDataURL(this.file2)         
-    }    
+      reader.onload = (e) => this.fotoselec2 = reader.result;
+      reader.readAsDataURL(this.file2)
+    }   
+  }
+  
+
+  public convertDataUrlToBlob(dataUrl): Blob {
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new Blob([u8arr], {type: mime});
   }
 
   private enviar(param): void{
@@ -149,32 +172,40 @@ export class CrearRopaComponent implements OnInit {
     if(this.ropaForm.invalid){
       return;
     }
-    //Obtener id Generos del Formulario y Crear arreglo con {id: value}
-    let gFormat:any=this.ropaForm.get('categorias').value.map(x=>({['id']: x}))
-    //Asignar valor al formulario
-    this.ropaForm.patchValue({categorias: gFormat});  
-    
-    
-    // //Accion API create enviando toda la informacion del formulario
-    // var split = (this.ropaForm.value.foto2).split("fakepath\\")
 
+    let gFormat:any=this.ropaForm.get('categorias').value.map(x=>({['id']: x}))
+    this.ropaForm.patchValue({categorias: gFormat});  
     this.ropaForm.value.vendedorId = this.currentUser.user.id
+    this.ropaForm.value.foto1 = this.fotoselec
+    this.ropaForm.value.foto2 = this.fotoselec2
+    
     this.gService.create('ropa',this.ropaForm.value).pipe(takeUntil(this.destroy$))
     .subscribe((data: any) => {
       //Obtener respuest
-      
       this.respRopa = data;
-      /*let foto = {
-        id: this.respRopa.id,
-        foto2: btoa(this.fotoselec2.toString())//Buffer.from(this.fotoselec2.toString()).toString('ascii')
-      }
       
-            
+      let foto = {
+        id: this.respRopa.id,
+        foto: this.ropaForm.value.foto1//Buffer.from(this.fotoselec2.toString()).toString('ascii')
+      }
+
+      let foto2 = {
+        id: this.respRopa.id,
+        foto: this.ropaForm.value.foto2//Buffer.from(this.fotoselec2.toString()).toString('ascii')
+      }
+
       this.gService.create('foto',foto)
       .pipe(takeUntil(this.destroy$)) .subscribe((data: any) => {
       //Obtener respuesta
       this.respFoto = data;     
-      })*/
+      })
+
+      this.gService.create('foto',foto2)
+      .pipe(takeUntil(this.destroy$)) .subscribe((data: any) => {
+      //Obtener respuesta
+      this.respFoto = data;     
+      })
+
       this.router.navigate(['/ropa/lista-vendedor'],{
         queryParams: {create:'true'}
       });        
@@ -221,17 +252,42 @@ export class CrearRopaComponent implements OnInit {
     if(this.ropaForm.invalid){
       return;
     }
-    
-    //Obtener id Generos del Formulario y Crear arreglo con {id: value}
+
     let gFormat:any=this.ropaForm.get('categorias').value.map(x=>({['id']: x }));
     //Asignar valor al formulario 
     this.ropaForm.patchValue({categorias:gFormat});
-    //Accion API create enviando toda la informacion del formulario
     this.ropaForm.value.vendedorId = this.currentUser.user.id
+    this.ropaForm.value.foto1 = this.fotoselec
+    this.ropaForm.value.foto2 = this.fotoselec2
+
     this.gService.update('ropa',this.ropaForm.value)
     .pipe(takeUntil(this.destroy$)) .subscribe((data: any) => {
-      //Obtener respuesta
       this.respRopa=data;
+
+      let foto = {
+        id: this.idAct1,
+        idRopa: this.respRopa.id,
+        foto: this.ropaForm.value.foto1
+      }
+
+      let foto2 = {
+        id: this.idAct2,
+        idRopa: this.respRopa.id,
+        foto: this.ropaForm.value.foto2//Buffer.from(this.fotoselec2.toString()).toString('ascii')
+      }
+
+      this.gService.update('foto',foto)
+      .pipe(takeUntil(this.destroy$)) .subscribe((data: any) => {
+      //Obtener respuesta
+      this.respFoto = data;     
+      })
+
+      this.gService.update('foto',foto2)
+      .pipe(takeUntil(this.destroy$)) .subscribe((data: any) => {
+      //Obtener respuesta
+      this.respFoto = data;     
+      })
+
       this.router.navigate(['/ropa/lista-vendedor'],{
         queryParams: {update:'true'}
       });

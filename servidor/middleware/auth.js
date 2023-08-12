@@ -27,11 +27,11 @@ module.exports.verifyToken = async (req, res, next) => {
 exports.grantRole = function (roles) {
   return async (req, res, next) => {
     try {
-      const bearerHeader = req.headers["authorization"];
-      console.log(bearerHeader)
+      const bearerHeader = req.headers["authorization"];      
       let token;
       if (typeof bearerHeader !== "undefined") {
-        token = bearerHeader.split(" ")[1].trim().toString();
+        token = bearerHeader.split("Bearer")[1].trim().toString();
+        console.log(token)
       } else {
         res.status(403).json({
           status: false,

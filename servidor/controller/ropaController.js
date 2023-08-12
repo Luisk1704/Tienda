@@ -131,6 +131,7 @@ module.exports.getByID = async(request,response,next) => {
             },
             fotos:{
                 select:{
+                    id: true,
                     foto: true
                 }
             }
