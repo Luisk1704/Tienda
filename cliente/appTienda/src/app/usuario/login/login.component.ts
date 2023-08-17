@@ -69,6 +69,11 @@ export class LoginComponent implements OnInit{
    })
    
   }
+
+  registrarse(){
+    this.router.navigate(['usuario/registrarse']);
+  }
+
   onReset() {
     this.formulario.reset();
   }
@@ -80,6 +85,11 @@ export class LoginComponent implements OnInit{
     }
     this.authService.loginUser(this.formulario.value)    
     .subscribe((respuesta:any)=>{
+      console.log(respuesta)
+      if (respuesta == null) {
+        this.router.navigate(['usuario/login']);
+        return        
+      }
       this.router.navigate(['/']);
     })
   }

@@ -1,5 +1,4 @@
 const { PrismaClient } = require('@prisma/client')
-const { request } = require('http')
 const prisma = new PrismaClient()
 
 module.exports.getByCliente = async(request,response,next)=>{
@@ -8,4 +7,19 @@ module.exports.getByCliente = async(request,response,next)=>{
         where:{idCliente:id}
     })
     response.json(metodo)
+}
+
+module.exports.create = async(request,response,next) => {
+    let metodo = request.body
+    console.log(request.body)
+    const nuevoMetodo =  await prisma.metodoPago.create({
+        data: {
+          idCliente: metodo.idCliente,
+          descripcion: metodo.descripcion,
+          proveedor: metodo.proveedor,
+          numeroCuenta: metodo.numeroCuenta,
+          fechaExpiracion: metodo.fechaExpiracion
+        }
+      })
+    response.json(nuevoMetodo)
 }

@@ -3,7 +3,8 @@ import { categorias } from "./seeds/categorias";
 //import { roles } from "./seeds/roles"
 import { metodosPago } from "./seeds/metodosPago";
 import { proveedores } from "./seeds/proveedores";
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt"
+
 let salt= bcrypt.genSaltSync(10);
 /*
 import { parse } from "url";
@@ -108,25 +109,36 @@ async function main() {
         rol: Rol.CLIENTE  
       }
     })
+    
+    const fecha = new Date("2027-12-04")
 
-    await prisma.metodoPago.create({
+    await prisma.metodoPago.create({      
       data:{
         idCliente: 4,
         descripcion: "Tarjeta",
+        proveedor: "Visa", 
+        numeroCuenta: "49857349858345",
+        fechaExpiracion:  new Date("2027-12-04") //2023-08-17 02:36:35.854
       }
     })
 
     await prisma.metodoPago.create({
       data:{
         idCliente: 4,
-        descripcion: "Efectivo"
+        descripcion: "Efectivo",
+        proveedor: "MasterCard", 
+        numeroCuenta: "49857349858345",
+        fechaExpiracion:  new Date("2025-12-04") //2023-08-17 02:36:35.854
       }
     })
 
     await prisma.metodoPago.create({
       data:{
         idCliente: 4,
-        descripcion: "Sinpe Movil"
+        descripcion: "Sinpe Movil",
+        proveedor: "Visa", 
+        numeroCuenta: "49857349858345",
+        fechaExpiracion:  new Date("2026-08-04") //2023-08-17 02:36:35.854
       }
     })
 
@@ -134,20 +146,29 @@ async function main() {
       data:{
         idCliente: 6,
         descripcion: "Tarjeta",
+        proveedor: "MasterCard", 
+        numeroCuenta: "49857349858345",
+        fechaExpiracion:  new Date("2024-04-04") //2023-08-17 02:36:35.854
       }
     })
 
     await prisma.metodoPago.create({
       data:{
         idCliente: 6,
-        descripcion: "Efectivo"
+        descripcion: "Efectivo",
+        proveedor: "Visa", 
+        numeroCuenta: "49857349858345",
+        fechaExpiracion:  new Date("2026-12-04") //2023-08-17 02:36:35.854
       }
     })
 
     await prisma.metodoPago.create({
       data:{
         idCliente: 6,
-        descripcion: "Sinpe Movil"
+        descripcion: "Sinpe Movil",
+        proveedor: "Visa", 
+        numeroCuenta: "4985345349858345",
+        fechaExpiracion:  new Date("2027-12-04") //2023-08-17 02:36:35.854
       }
     })
 
@@ -155,20 +176,29 @@ async function main() {
       data:{
         idCliente: 7,
         descripcion: "Tarjeta",
+        proveedor: "MasterCard", 
+        numeroCuenta: "4998899858345",
+        fechaExpiracion:  new Date("2027-12-04") //2023-08-17 02:36:35.854
       }
     })
 
     await prisma.metodoPago.create({
       data:{
         idCliente: 7,
-        descripcion: "Efectivo"
+        descripcion: "Efectivo",
+        proveedor: "MasterCard", 
+        numeroCuenta: "49122131858345",
+        fechaExpiracion:  new Date("2028-11-04") //2023-08-17 02:36:35.854
       }
     })
 
     await prisma.metodoPago.create({
       data:{
         idCliente: 7,
-        descripcion: "Sinpe Movil"
+        descripcion: "Sinpe Movil",
+        proveedor: "Visa", 
+        numeroCuenta: "4999089058345",
+        fechaExpiracion:  new Date("2027-12-04") //2023-08-17 02:36:35.854
       }
     })
 

@@ -75,6 +75,58 @@ module.exports.get = async(request,response,next) => {
     response.json(ropas)
 }
 
+module.exports.getPrecioAsc = async(request,response,next) => {
+    const ropas = await prisma.ropa.findMany({
+        orderBy:{
+            precio: 'asc'
+        },
+        include: {
+            proveedor: {
+                select:{
+                    nombre: true
+                }
+            },            
+            categorias: {
+                select:{
+                    descripcion: true
+                }
+            },
+            fotos:{
+                select:{
+                    foto: true
+                }
+            }
+        }
+    })
+    response.json(ropas)
+}
+
+module.exports.getPrecioDsc = async(request,response,next) => {
+    const ropas = await prisma.ropa.findMany({
+        orderBy:{
+            precio: 'desc'
+        },
+        include: {
+            proveedor: {
+                select:{
+                    nombre: true
+                }
+            },            
+            categorias: {
+                select:{
+                    descripcion: true
+                }
+            },
+            fotos:{
+                select:{
+                    foto: true
+                }
+            }
+        }
+    })
+    response.json(ropas)
+}
+
 module.exports.getByVendedor = async(request,response,next) => {
     let vendedor = parseInt(request.params.id)
     const ropas = await prisma.ropa.findMany({

@@ -1,7 +1,28 @@
-<div class="cuerpo">
-    <div class="tabla">
-        <mat-grid-list [cols]="5" rowHeight="13em" gutterSize="10px" *ngIf="datos">
-            <mat-grid-tile *ngFor="let item of datos">            
+<div class="cuerpo">    
+    <div class="tabla">                
+        <form>
+            <div class="row">
+                <div class="col-lg-6 row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-select placeholder="Categorias">
+                                <mat-option>
+                                    <a (click)="filtroCategoria()">Todos</a>                        
+                                </mat-option>
+                                <mat-option *ngFor="let g of categorias" [value]="g.id">
+                                    <a (click)="filtroCategoria(g)">{{g.descripcion}}</a>                        
+                                </mat-option>                            
+                            </mat-select>
+                        </mat-form-field>
+                        <a class="regresar ordenar" (click)="ordenar()"><mat-icon>swap_vert</mat-icon></a>                    
+                    </div>                  
+                </div>                             
+            </div>            
+        </form>       
+        <br>
+        <br>
+        <mat-grid-list *ngIf="listaProductos" [cols]="5" rowHeight="13em" gutterSize="10px">
+            <mat-grid-tile *ngFor="let item of listaProductos">            
                     <mat-card>
                         <mat-card-header><strong>{{item.nombre}} &nbsp;&nbsp;|</strong>&nbsp;&nbsp;{{item.proveedor.nombre}}</mat-card-header>
                         <mat-card-content><mat-card-header>{{item.precio | currency: 'CRC': 'symbol-narrow'}}</mat-card-header></mat-card-content>

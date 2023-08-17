@@ -31,7 +31,6 @@ exports.grantRole = function (roles) {
       let token;
       if (typeof bearerHeader !== "undefined") {
         token = bearerHeader.split("Bearer")[1].trim().toString();
-        console.log(token)
       } else {
         res.status(403).json({
           status: false,
@@ -40,9 +39,9 @@ exports.grantRole = function (roles) {
       }
       if (token) {
         const verify = jwt.verify(token, process.env.SECRET_KEY);
-       //!==
-        if (roles.length && roles.indexOf(verify.rol)===-1) {
-          console.log(verify)
+        console.log(verify)
+        //!==
+        if (roles.length && roles.indexOf(verify.rol)===-1 || !verify.estado) {
           return res.status(401).json({ message: "No autorizado" });
         }
         next();

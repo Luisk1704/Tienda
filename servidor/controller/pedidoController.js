@@ -13,16 +13,20 @@ module.exports.crear = async(request,response,next) =>{
             idPago: pedido.idPago,
             clienteId: pedido.clienteId,
             direccionId: pedido.direccionId, 
-            descuento: 0.12,
+            descuento: 0,
             IV: 0.13,
             estado: 'pendiente',
             subtotal: pedido.subtotal,
             Total: pedido.Total,
             ropas:{
-                connect: pedido.ropas
+                createMany:{
+                    //[{videojuegoId, cantidad}]
+                    data: pedido.ropas
+                }
             }
         }
     })
+    response.json(crear)
 }
 
 module.exports.getByIdvendedor = async(request,response,next) => {

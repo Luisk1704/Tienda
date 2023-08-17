@@ -32,9 +32,9 @@ export class AuthGuard implements CanActivate {
   checkUserLogin(route: ActivatedRouteSnapshot, url: any): boolean {
     this.authService.currentUser.subscribe((x) => {this.currentUser = x;});
     if (this.isAuthenticated) {
-      const userRole = this.currentUser.user.rol;
+      const userRole = this.currentUser.user;
       //roles.length && roles.indexOf(verify.role)===-1
-      if(route.data['roles'].length && !route.data['roles'].includes(userRole)){ 
+      if(route.data['roles'].length && !route.data['roles'].includes(userRole.rol)){ 
         this.router.navigate(['/usuario/login'], {
           //Parametro para mostrar mensaje en login
           queryParams: { auth: 'no' }

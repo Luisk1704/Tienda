@@ -16,12 +16,7 @@ const routes: Routes = [
     }
   },
 
-  {path:'ropa/lista-cliente', component: ListaRopaclienteComponent,
-  canActivate:[AuthGuard],
-    data:{
-      roles: ['CLIENTE']
-    }
-  },
+  {path:'ropa/lista-cliente', component: ListaRopaclienteComponent},
 
   {path:'ropa/crear-ropa', component: CrearRopaComponent,
   data:{

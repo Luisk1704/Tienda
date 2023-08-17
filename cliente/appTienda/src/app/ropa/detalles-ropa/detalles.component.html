@@ -36,7 +36,7 @@
                 <br>
                 <br>
                 <div>
-                    <a *ngIf="isClient" class="regresar"   [routerLink]="['']" (click)="comprar(datos.id)">Comprar</a>
+                    <a *ngIf="isClient" class="regresar" (click)="comprar(datos.id)">Comprar</a>
                     <a class="regresar"  [routerLink]="[ruta]">
                         Regresar
                     </a>
@@ -66,8 +66,8 @@
                 <div style="color: blueviolet;">
                     {{item.descripcion}}<a *ngIf="isVend && !item.respuestas[0]" [routerLink]="['']" routerLinkActive="router-link-active" (click)="responder(item.id)" class="regresar">R/</a></div>
             </div>
-            <div class="col">
-                <p *ngIf="item.respuestas[0]">R/  {{item.respuestas[0].descripcion}}</p>
+            <div *ngIf="respuestas" class="col">
+                <p>R/  {{item.respuestas[0].descripcion}}</p>
             </div>
             <br>            
         </div>

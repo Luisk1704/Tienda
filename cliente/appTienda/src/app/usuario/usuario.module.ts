@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from '../core/header/header.component';
+import { RegistrarComponent } from './registrar/registrar.component';
 
 
 
@@ -24,7 +25,8 @@ import { HeaderComponent } from '../core/header/header.component';
   declarations: [
     ListaComponent,
     DetallesComponent,
-    LoginComponent
+    LoginComponent,
+    RegistrarComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +46,8 @@ import { HeaderComponent } from '../core/header/header.component';
   ],
   exports: [
     DetallesComponent,
-    LoginComponent
+    LoginComponent,
+    RegistrarComponent
   ],
   providers: [HeaderComponent],
 })

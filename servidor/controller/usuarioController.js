@@ -1,6 +1,5 @@
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient, Rol } = require('@prisma/client')
 const prisma = new PrismaClient()
-const { Role } = require("@prisma/client");
 const jwt = require("jsonwebtoken");
 //--npm install bcrypt
 const bcrypt = require("bcrypt");
@@ -8,6 +7,7 @@ const bcrypt = require("bcrypt");
 //Crear nuevo usuario
 module.exports.register = async (request, response, next) => {
   const userData = request.body;
+  console.log(userData.rol)
 
   //Salt es una cadena aleatoria.
   //"salt round" factor de costo controla cuánto tiempo se necesita para calcular un solo hash de BCrypt
@@ -22,7 +22,7 @@ module.exports.register = async (request, response, next) => {
       telefono: userData.telefono,
       correo: userData.correo,
       contrasenna: hash,
-      estado: userData.estado,
+      estado: true,
       rol: Rol[userData.rol]
     },
     
@@ -63,7 +63,8 @@ module.exports.login = async (request, response, next) => {
     //Crear el payload
     const payload={
       correo: user.correo,
-      rol: user.rol
+      rol: user.rol,
+      estado: user.estado
     }
     //Crear el token
     const token= jwt.sign(payload,process.env.SECRET_KEY,{
@@ -89,9 +90,21 @@ module.exports.get = async(request,response,next) => {
 module.exports.getById = async(request,response,next) => {
     let Id = parseInt(request.params.id)
     const usuario = await prisma.usuario.findUnique({
-        where: {id:Id,
-        c
-        }
+        where: {id:Id}
     })
     response.json(usuario)
 }
+
+module.exports.update = async (request, response, next) => {
+  let usuario = request.body;
+  let idusuario = parseInt(request.params.id);
+  //Obtener usuario viejo
+
+  const nuevoUsuario =  await prisma.usuario.update({
+      where:{id: idusuario},
+      data: {
+        estado: usuario.estado
+      },
+    })
+  response.json(nuevoUsuario);
+};

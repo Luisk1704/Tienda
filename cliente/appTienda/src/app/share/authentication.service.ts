@@ -4,6 +4,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { CartService } from './cart.service';
+import { NotificacionService, TipoMessage } from './notification.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +26,8 @@ export class AuthenticationService {
   //Inyectar cliente HTTP para las solicitudes al API
   
 
-  constructor(private http: HttpClient, private cartService:CartService) {
+  constructor(private http: HttpClient, private cartService:CartService,private noti:NotificacionService,
+    private router: Router,private route: ActivatedRoute) {
     //Obtener los datos del usuario en localStorage, si existe
     this.currentUserSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('currentUser'))
@@ -52,7 +55,7 @@ export class AuthenticationService {
   //Crear usuario
   createUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.ServerUrl + 'user/registrar',
+      this.ServerUrl + 'usuario/registrar',
       user
     );
   }
@@ -66,7 +69,11 @@ export class AuthenticationService {
       .post<any>(this.ServerUrl + 'usuario/login', user)
       .pipe(
         map((user) => {
-          
+          console.log(user)
+          if (user.data.user.estado == false) {
+            this.noti.mensaje('Error','El usuario se encuentra inhabilitado',TipoMessage.error);
+            return null
+          }
           // almacene los detalles del usuario y el token jwt
           // en el almacenamiento local para mantener al usuario conectado entre las actualizaciones de la página
           localStorage.setItem('currentUser', JSON.stringify(user.data));

@@ -21,3 +21,24 @@ th {
   color: blueviolet;
 }
 
+.rojo{
+  background-color: red;
+  color: white;
+  border: transparent;
+  text-align: center;
+  padding: 9px;
+  border-radius: 10px !important;
+  width: 100px;
+  height: fit-content;
+}
+
+.verde{
+  background-color: greenyellow;
+  color: black;
+  border: transparent;
+  text-align: center;
+  padding: 9px;
+  border-radius: 10px !important;
+  width: 100px;
+  height: fit-content;
+}

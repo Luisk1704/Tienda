@@ -13,6 +13,14 @@ mat-card-header{
     font-size: 20px;    
 }
 
+mat-icon{
+    padding-top: 3.5px;
+}
+
+.ordenar{
+    margin-left: 15px;
+}
+
 strong{
     color: white;
 }
@@ -36,6 +44,33 @@ button{
     padding: 2% !important;
 }
 
+
+a {
+    font-size: medium;
+    background: transparent;
+    text-decoration: none;
+    color: white;
+    border-bottom: solid transparent 2px;
+}
+
+.regresar{
+    text-decoration: none;
+    border: solid 5px blueviolet !important;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 10px !important;
+    color: blueviolet;
+    width: 15%;  
+}
+
+.regresar:hover{
+    border: solid 5px blueviolet !important;
+    padding: 10px;
+    background-color: blueviolet;
+    border-radius: 10px !important;
+    color: black;
+    width: 15%;  
+}
 
 
 

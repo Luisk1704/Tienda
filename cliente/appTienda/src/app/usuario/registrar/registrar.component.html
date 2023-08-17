@@ -1,0 +1,201 @@
+<div class="cuerpo">
+    <form [formGroup]="formCreate" novalidate>
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <mat-card class="shipping-card">
+                    <mat-card-header>
+                        <mat-card-title>Crear Usuario </mat-card-title>
+                    </mat-card-header>
+                    <br>            
+                    <mat-card-content>
+                        <mat-card-header>
+                            <mat-card-title>Datos de Usuario </mat-card-title>
+                        </mat-card-header>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Nombre</mat-label>
+                                    <input matInput type="text" placeholder="Nombre usuario" formControlName="nombre" />
+                                    <mat-error *ngIf="errorHandling('nombre', 'required')">
+                                        Nombre es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label># Cedula</mat-label>
+                                    <input matInput type="text" placeholder="Cedula" formControlName="cedula" />
+                                    <mat-error *ngIf="errorHandling('cedula', 'required')">
+                                        Nombre es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label># Teléfono</mat-label>
+                                    <input matInput type="text" placeholder="Teléfono" formControlName="telefono" />
+                                    <mat-error *ngIf="errorHandling('correo', 'required')">
+                                        Teléfono es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Correo Electronico</mat-label>
+                                    <input matInput type="text" placeholder="Correo usuario" formControlName="correo" />
+                                    <mat-error *ngIf="errorHandling('correo', 'required')">
+                                        Correo es <strong>requerido</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="errorHandling('correo', 'email')">
+                                        Correo<strong>no valido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Contraseña</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña usuario"
+                                        formControlName="contrasenna" />
+                                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                                        [attr.aria-pressed]="hide">
+                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="errorHandling('contrasenna', 'required')">
+                                        Contraseña es <strong>requerida</strong>
+                                    </mat-error>
+                                </mat-form-field>                    
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Rol</mat-label>
+                                    <mat-select placeholder="Rol" formControlName="rol">
+                                        <mat-option *ngFor="let r of roles" [value]="r.id">
+                                            <a (click)="capturarRol(r)">{{ r.nombre }}</a>
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>                    
+                        </div>
+                        <br>
+                        <mat-card-header>
+                            <mat-card-title>Dirección</mat-card-title>
+                        </mat-card-header>            
+                        <div class="row">                 
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-select placeholder="Provincia" formControlName="provincia" >
+                                        <mat-option *ngFor="let provincia of provincias" [value]="provincia.toponymName.replace('Provincia de','')">
+                                             <a (click)="listaCantones(provincia.geonameId)">{{provincia.toponymName.replace("Provincia de","")}}</a>
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="errorHandling('provincia','required')">
+                                        Provincia es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-select placeholder="Cantón" formControlName="canton" >
+                                        <mat-option *ngFor="let canton of cantones" [value]="canton.toponymName">
+                                             <a (click)="listaDistritos(canton.geonameId)">{{canton.toponymName}}</a>
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="errorHandling('canton','required')">
+                                        Cantón es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-select placeholder="Distrito" formControlName="distrito">
+                                        <mat-option *ngFor="let distrito of distritos" [value]="distrito.toponymName">
+                                             <a>{{distrito.toponymName}}</a>
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="errorHandling('distrito','required')">
+                                        Distrito es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>                        
+                        <div class="row">
+                            <div class="col">                            
+                                <mat-form-field class="full-width">
+                                    <mat-label>Dirección exacta</mat-label>
+                                    <input matInput type="text" placeholder="Dirección" formControlName="direccionExacta" />
+                                    <mat-error *ngIf="errorHandling('direccionExacta', 'required')">
+                                        Dirección es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Código Postal</mat-label>
+                                    <input matInput type="text" placeholder="Código Postal" formControlName="codPostal" />
+                                    <mat-error *ngIf="errorHandling('codPostal', 'required')">
+                                        Código Postal es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+
+                            </div>                    
+                        </div>
+                        <br>
+                        <mat-card-header *ngIf="isClient">
+                            <mat-card-title>Tipo de Pago</mat-card-title>
+                        </mat-card-header>
+                        <div *ngIf="isClient" class="row">
+                            <div class="col" *ngIf="metodos">
+                                <mat-form-field class="full-width">
+                                    <mat-select placeholder="Tipo Pago" formControlName="metodo">
+                                        <mat-option *ngFor="let metodo of metodos" [value]="metodo.value">
+                                            {{metodo.viewValue}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="errorHandling('metodo','required')">
+                                        Tipo de pago es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Proveedor</mat-label>
+                                    <input matInput type="text" placeholder="Código Postal" formControlName="proveedor" />
+                                    <mat-error *ngIf="errorHandling('proveedor', 'required')">
+                                        Proveedor es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Número de Cuenta</mat-label>
+                                    <input matInput type="text" placeholder="Numero de Cuenta" formControlName="numeroCuenta" />
+                                    <mat-error *ngIf="errorHandling('numeroCuenta', 'required')">
+                                        Número de Cuenta es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div *ngIf="isClient" class="row">
+                            <div class="col">
+                                <input class="fecha" type="date" placeholder="Fecha de Expiración" formControlName="fechaExpiracion" />
+                                <mat-error *ngIf="errorHandling('fechaExpiracion', 'required')">
+                                    Fecha de Expiración es <strong>requerido</strong>
+                                </mat-error>
+                            </div>
+                        </div>           
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button class="boton" color="primary" (click)="submitForm()">Registrar</button>
+                        <button class="boton" color="accent" type="reset" (click)="onReset()">Cancelar</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>        
+    </form>
+</div>

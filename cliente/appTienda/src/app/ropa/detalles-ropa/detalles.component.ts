@@ -51,7 +51,7 @@ export class DetallesComponent implements OnInit{
     this.auth.currentUser.subscribe((x)=>{this.currentUser=x;
       if (this.currentUser == null) {
         this.authenticated = false
-        this.isClient = true
+        this.isClient = false
         this.isAdmin = false
         this.isVend = false
        } else if (this.currentUser.user.rol == 'ADMINISTRADOR') {
@@ -89,13 +89,13 @@ export class DetallesComponent implements OnInit{
         }
         if (this.datos.preguntas[0] != null) {
           this.preguntas = true
-        } else {
-          this.preguntas = false
           if (this.datos.preguntas[0].respuestas != null) {
             this.respuestas = true
           } else{
             this.respuestas = false
           }
+        } else {
+          this.preguntas = false          
         }
     });   
   }
@@ -128,7 +128,7 @@ export class DetallesComponent implements OnInit{
     })
   }
 
-  comprar(id:number){
+  comprar(id:Number){
     this.gService
     .get('ropa',id)
     .pipe(takeUntil(this.destroy$))

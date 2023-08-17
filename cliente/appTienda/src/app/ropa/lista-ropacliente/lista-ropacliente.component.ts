@@ -11,10 +11,26 @@ import { GenericService } from 'src/app/share/generic.service';
   templateUrl: './lista-ropacliente.component.html',
   styleUrls: ['./lista-ropacliente.component.css']
 })
+
+// interface categoria {
+//   value: string;
+//   viewValue: string;
+// }
+
 export class ListaRopaclienteComponent {
   datos:any;//Guarda la respuesta del API
+  listaProductos:any
+  categ:boolean = false
+  asc:boolean = false
   categorias:any
   destroy$: Subject<boolean>=new Subject<boolean>();
+  // _categorias: categoria[] = [
+  //   {value: 'Nuevo', viewValue: 'Nuevo'},
+  //   {value: 'Usado como nuevo', viewValue: 'Usado como nuevo'},
+  //   {value: 'Usado en buen categoria', viewValue: 'Usado en buen categoria'},
+  //   {value: 'Usado aceptable', viewValue: 'Usado aceptable'}
+  // ];
+  Lista_produc:Array<any>; 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -28,6 +44,7 @@ export class ListaRopaclienteComponent {
     private router: Router,
     private route: ActivatedRoute) {
       this.listaCliente();
+      this.listaCategorias();
   }
 
   //Llamar al API y obtener la lista de videojuegos
@@ -37,12 +54,71 @@ export class ListaRopaclienteComponent {
       .list('ropa/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
-        console.log(data);
-        this.datos=data;       
+        this.datos=data;
+        this.listaProductos = this.datos       
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;
         //this.dataSource.paginator = this.paginator;       
       })
+  }
+
+  listaCategorias() {
+    this.categorias = null;
+    this.gService
+      .list('categoria')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        // console.log(data);
+        this.categorias = data;
+      });
+  }
+
+  ordenar(){
+    if (!this.asc) {
+      this.gService
+      .list('ropa/precio_asc')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        // console.log(data);
+        this.listaProductos = data;
+        this.asc = true
+      });
+    } else {
+      this.gService
+      .list('ropa/precio_desc')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        // console.log(data);
+        this.listaProductos = data;
+        this.asc = false
+      });
+    }
+  }
+
+
+
+  filtroCategoria(event?:any){
+    this.Lista_produc = new Array<any>()
+    if (!event) {
+      this.listaProductos = this.datos
+    } else {
+      this.datos.forEach(ropa => {
+        ropa.categorias.forEach(element => {
+          if (element.descripcion == event.descripcion) {
+            this.categ = true
+          } else {
+            this.categ = false
+          }
+        });
+        var arr
+        if (this.categ) {
+          this.Lista_produc.push(ropa)
+        }
+        this.categ = false      
+      });
+      this.listaProductos = this.Lista_produc
+    }    
+    this.Lista_produc = null
   }
   //localhost:3000/videojuego/1
   detalleProducto(id:Number){

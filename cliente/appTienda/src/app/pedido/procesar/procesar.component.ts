@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 import { CartService } from 'src/app/share/cart.service';
 import { GenericService } from 'src/app/share/generic.service';
 import { NotificacionService, TipoMessage } from 'src/app/share/notification.service';
@@ -12,45 +14,84 @@ import { NotificacionService, TipoMessage } from 'src/app/share/notification.ser
 })
 export class ProcesarComponent implements OnInit{
   public total = 0;
+  public IV = 0.13;
+  public impuesto = 0;
   public fecha = Date.now()
   public qtyItems = 0
   public dataSourse = new MatTableDataSource<any>()
-  public metodos:any
+  public metodo:any
+  public listaFormasPago:any;
+  public ListaDir:any
+  public direccion:any
   public destroy$: Subject<boolean>=new Subject<boolean>();
   public currentUser:any
   displayedColumns: string[] = ['producto', 'precio', 'cantidad', 'subtotal','acciones'];
   
   constructor(private gService: GenericService,
+  private router: Router,
+  private authService: AuthenticationService,
   private cart: CartService, 
   private noti: NotificacionService) {
-    this.currentUser = gService.currentUser
+    this.authService.currentUser.subscribe((x)=>{this.currentUser=x})
+    this.listaMetodos()
+    this.listaDirecciones()
   }
 
   ngOnInit(): void {
     this.cart.currentDataCart$.subscribe(data =>
       this.dataSourse = new MatTableDataSource(data)
     )
-    this.total = this.cart.getTotal()
-    this.gService
-    .get('metodo/',this.currentUser.id)
+    this.authService.currentUser.subscribe((x)=>{this.currentUser=x})
+    this.impuesto = this.cart.getTotal()*this.IV
+    this.total = this.cart.getTotal()+(this.cart.getTotal()*this.IV)   
+  }
+
+  listaMetodos(){
+    this.gService    
+    .get('metodo',this.currentUser.user.id)
     .pipe(takeUntil(this.destroy$))
-    .subscribe((data:any)=>{
-        this.metodos=data;
+    .subscribe((data:any)=>{        
+        this.listaFormasPago=data;
+        console.log(this.listaFormasPago)
     });
+  }
+
+  listaDirecciones(){
+    this.gService    
+    .get('direccion',this.currentUser.user.id)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((data:any)=>{       
+        this.ListaDir=data;
+    });
+  }
+
+  capturarPago(metodoOpcion:any){
+    this.metodo = metodoOpcion
+    console.log(this.metodo)
+  }
+
+  capturarDireccion(dirOpcion:any){
+    if (dirOpcion != null) {
+      this.direccion = dirOpcion
+    } else {
+      this.direccion = this.ListaDir[0].id
+    }
+    console.log(this.direccion)
   }
 
   actualizarCantidad(item: any) {
     this.cart.addToCart(item);
-    this.total=this.cart.getTotal();
-   /*  this.noti.mensaje('Orden',
+    this.total=this.cart.getTotal()+(this.cart.getTotal()*this.IV);
+     this.noti.mensaje('Orden',
     'Cantidad actualizada: '+item.cantidad,
-    TipoMessage.info) */
+    TipoMessage.info) 
   }
+
   eliminarItem(item: any) {
     this.cart.removeFromCart(item);
     this.total=this.cart.getTotal();
     this.noti.mensaje('Orden',
-    'Videojuego eliminado',
+    'Producto eliminado',
     TipoMessage.warning)
   }
   registrarOrden() {
@@ -62,30 +103,23 @@ export class ProcesarComponent implements OnInit{
       let detalles=itemsCarrito.map(
         x=>({
           ['idRopa']:x.idItem,
-          ['cantidad']: x.cantidad
+          ['cantidad']: x.cantidad,
+          ['subtotal']:x.subtotal
         })
       )
-      //Datos para el API
-      let infoPedido = {
-        'idPago': this.metodos[0].id,
-        'clienteid': this.currentUser.id,
-        'ropas':detalles,
 
+      //Datos para el API
+      console.log(this.metodo)
+      console.log(this.direccion)
+      let infoPedido = {
+        'idPago': this.metodo,
+        'clienteId': this.currentUser.user.id,
+        'direccionId': this.direccion,
+        'ropas':detalles,
+        'subtotal': this.cart.getTotal(),
+        'Total': this.total,
       }
 
-    //   data:{
-    //     idPago: pedido.idPago,
-    //     clienteId: pedido.clienteId,
-    //     direccionId: pedido.direccionId, 
-    //     descuento: 0.12,
-    //     IV: 0.13,
-    //     estado: 'pendiente',
-    //     subtotal: pedido.subtotal,
-    //     Total: pedido.Total,
-    //     ropas:{
-    //         connect: pedido.ropas
-    //     }
-    // }
       this.gService.create('pedido',infoPedido)
       .subscribe((respuesta:any)=>{
         this.noti.mensaje('Orden',
@@ -99,5 +133,8 @@ export class ProcesarComponent implements OnInit{
     'Agregue videojuegos a la orden',
     TipoMessage.warning)
    }
+   this.router.navigate(['/ropa/lista-cliente'],{
+    queryParams: {create:'true'}
+  });
   }
 }

@@ -76,7 +76,7 @@ model Usuario{
   correo String @unique
   contrasenna String
   estado Boolean
-  rol Rol @default(CLIENTE)
+  rol Rol @default(USUARIO)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
   metodos MetodoPago[]
@@ -93,12 +93,16 @@ enum Rol {
   ADMINISTRADOR
   VENDEDOR
   CLIENTE
+  USUARIO
 }
 
 model MetodoPago{
   id Int @id @default(autoincrement())
   idCliente Int
   descripcion String
+  proveedor String
+  numeroCuenta String
+  fechaExpiracion DateTime 
   usuario Usuario @relation(fields: [idCliente],references: [id])
   pedidos Pedido[]
   createdAt DateTime @default(now())

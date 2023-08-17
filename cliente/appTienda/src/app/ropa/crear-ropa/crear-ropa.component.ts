@@ -24,7 +24,7 @@ export class CrearRopaComponent implements OnInit {
     {value: 'Usado como nuevo', viewValue: 'Usado como nuevo'},
     {value: 'Usado en buen estado', viewValue: 'Usado en buen estado'},
     {value: 'Usado aceptable', viewValue: 'Usado aceptable'}
-  ];;
+  ];
   
   destroy$: Subject<boolean> = new Subject<boolean>();
   //Titulo

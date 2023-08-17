@@ -10,7 +10,8 @@ import { ListaPedidoClienteComponent } from './lista-pedido-cliente/lista-pedido
 import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.component';
 import { ProcesarComponent } from './procesar/procesar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input'; 
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select'; 
 
 @NgModule({
   declarations: [  
@@ -25,7 +26,8 @@ import { MatInputModule } from '@angular/material/input';
     MatGridListModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   exports: [
   
