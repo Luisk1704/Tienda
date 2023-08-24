@@ -5,16 +5,22 @@
                 <div class="col-lg-6 row">
                     <div class="col">
                         <mat-form-field class="full-width">
-                            <mat-select placeholder="Categorias">
+                            <mat-select placeholder="Categorias" name="first" [(ngModel)]="categoria" (ngModelChange)="filtroCategoria($event)">
                                 <mat-option>
-                                    <a (click)="filtroCategoria()">Todos</a>                        
+                                    <!--<a (click)="filtroCategoria()">Todos</a>-->Todos
                                 </mat-option>
-                                <mat-option *ngFor="let g of categorias" [value]="g.id">
-                                    <a (click)="filtroCategoria(g)">{{g.descripcion}}</a>                        
+                                <mat-option *ngFor="let g of categorias" [value]="g">
+                                    <!--<a (click)="filtroCategoria(g)">{{g.descripcion}}</a>-->{{g.descripcion}}
                                 </mat-option>                            
                             </mat-select>
                         </mat-form-field>
                         <a class="regresar ordenar" (click)="ordenar()"><mat-icon>swap_vert</mat-icon></a>                    
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Nombre Ropa</mat-label>
+                            <input matInput #texto (keyup)="filterRopa(texto.value)">
+                        </mat-form-field>
                     </div>                  
                 </div>                             
             </div>            

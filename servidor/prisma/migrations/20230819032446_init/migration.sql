@@ -39,6 +39,7 @@ CREATE TABLE `PedidoRopa` (
 -- CreateTable
 CREATE TABLE `Pedido` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `fechaOrden` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `idPago` INTEGER NOT NULL,
     `clienteId` INTEGER NOT NULL,
     `direccionId` INTEGER NOT NULL,

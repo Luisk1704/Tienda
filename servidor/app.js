@@ -28,6 +28,7 @@ const fotoRoutes = require('./routes/fotoRoutes');
 const metodoRoutes = require('./routes/metodosRoutes');
 const direccionesRoutes = require('./routes/direccionRoutes');
 const rolRoutes = require('./routes/rolRoutes');
+const evaluacionRoutes = require('./routes/evaluacionRoutes')
 const multer = require('multer');
 /*const videojuegosRoutes = require("./routes/videojuegosRoutes")
 const ordenesRutas = require("./routes/ordenesRutas")*/
@@ -63,6 +64,7 @@ app.use('/foto/',fotoRoutes)
 app.use('/metodo/',metodoRoutes)
 app.use('/direccion/',direccionesRoutes)
 app.use('/rol/',rolRoutes)
+app.use('/evaluacion/',evaluacionRoutes)
 app.use('/uploads',express.static(path.resolve('uploads')))
 /*app.use("/videojuego/",videojuegosRoutes)
 app.use("/orden",ordenesRutas)*/

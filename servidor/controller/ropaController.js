@@ -186,7 +186,8 @@ module.exports.getByID = async(request,response,next) => {
                     id: true,
                     foto: true
                 }
-            }
+            },
+            vendedor: true
         }
     })
     response.json(ropa)

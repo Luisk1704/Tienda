@@ -50,6 +50,7 @@ model PedidoRopa{
 
 model Pedido{
   id Int @id @default(autoincrement())
+  fechaOrden DateTime @default(now())
   idPago Int
   clienteId Int
   direccionId Int 
@@ -147,7 +148,7 @@ model Evaluacion{
   pedidoId Int
   nota Int
   descripcion String?
-  usuarioRol String
+  usuarioRol String?
   usuario Usuario @relation(fields: [usuarioId],references: [id])
   pedido Pedido @relation(fields: [pedidoId], references: [id])
   createdAt DateTime @default(now())

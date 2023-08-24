@@ -12,10 +12,9 @@ import { CrearRopaComponent } from './crear-ropa/crear-ropa.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormField } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule ,FormsModule} from '@angular/forms';
 import { PreguntasComponent } from './preguntas/preguntas.component';
 import { RespuestasComponent } from './respuestas/respuestas.component';
-
 
 @NgModule({
   declarations: [
@@ -37,7 +36,8 @@ import { RespuestasComponent } from './respuestas/respuestas.component';
     MatGridListModule,    
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule,    
+    ReactiveFormsModule,
+    FormsModule    
   ],
   exports: [
     ListaComponent,

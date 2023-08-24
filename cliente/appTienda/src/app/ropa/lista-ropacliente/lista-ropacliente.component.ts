@@ -20,6 +20,7 @@ import { GenericService } from 'src/app/share/generic.service';
 export class ListaRopaclienteComponent {
   datos:any;//Guarda la respuesta del API
   listaProductos:any
+  categoria:any = ""
   categ:boolean = false
   asc:boolean = false
   categorias:any
@@ -62,6 +63,16 @@ export class ListaRopaclienteComponent {
       })
   }
 
+  filterRopa(text:String){
+    if (!text) {
+      this.listaProductos = this.datos
+    } else {
+      this.listaProductos = this.datos.filter(
+        ropa => ropa?.nombre.toLowerCase().includes(text.toLowerCase())
+      )
+    }
+  }
+
   listaCategorias() {
     this.categorias = null;
     this.gService
@@ -101,16 +112,17 @@ export class ListaRopaclienteComponent {
     this.Lista_produc = new Array<any>()
     if (!event) {
       this.listaProductos = this.datos
-    } else {
+    } else {      
+      this.categoria = event
       this.datos.forEach(ropa => {
         ropa.categorias.forEach(element => {
           if (element.descripcion == event.descripcion) {
             this.categ = true
-          } else {
-            this.categ = false
-          }
+          } //else {
+          //   this.categ = false
+          // }
+          // console.log(this.categ)
         });
-        var arr
         if (this.categ) {
           this.Lista_produc.push(ropa)
         }

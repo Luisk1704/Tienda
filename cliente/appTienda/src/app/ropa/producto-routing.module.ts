@@ -19,12 +19,14 @@ const routes: Routes = [
   {path:'ropa/lista-cliente', component: ListaRopaclienteComponent},
 
   {path:'ropa/crear-ropa', component: CrearRopaComponent,
+  canActivate:[AuthGuard],
   data:{
     roles: ['VENDEDOR']
   }
   },
 
   {path:'ropa/crear-ropa/:id', component: CrearRopaComponent,
+  canActivate:[AuthGuard],
   data:{
     roles: ['VENDEDOR']
   }

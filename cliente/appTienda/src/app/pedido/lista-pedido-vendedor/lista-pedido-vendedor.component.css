@@ -10,6 +10,7 @@ table {
   mat-card {
     border: solid 5px rgb(95, 4, 152, .5) !important;
     border-radius: 10px !important;
+    background: linear-gradient(rgba(0, 0, 0), rgba(0, 0, 0, 0.7)) !important;
   }
   
   th {
@@ -36,4 +37,52 @@ table {
     background-color: blueviolet;
     border-radius: 10px !important;
     width: 17%;
+  }
+
+  .rojo{
+    background-color: red;
+    color: white;
+    border: transparent;
+    text-align: center;
+    padding: 9px;
+    border-radius: 10px !important;
+    width: 100px;
+    height: fit-content;
+  }
+  
+  .verde{
+    background-color: greenyellow;
+    color: black;
+    border: transparent;
+    text-align: center;
+    padding: 9px;
+    border-radius: 10px !important;
+    width: 100px;
+    height: fit-content;
+  }
+
+  .boton{
+    margin: 20px;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    padding: 9px;
+    border: solid 2.5px blueviolet !important;
+    background-color: blueviolet;
+    border-radius: 10px !important;
+    width: fit-content;
+    height: fit-content;
+  }
+  
+  .boton:hover{
+    margin: 20px;
+    color: blueviolet;
+    text-decoration: none;
+    text-align: center;
+    padding: 9px;
+    border: solid 2.5px blueviolet !important;
+    background-color: black;
+    border-radius: 10px !important;
+    width: fit-content;
+    height: fit-content;
   }

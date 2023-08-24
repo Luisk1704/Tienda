@@ -11,7 +11,13 @@
                 <a *ngIf="authenticated && isVend" mat-menu-item [routerLink]="['/pedido/lista-vendedor']" routerLinkActive="router-link-active">Pedidos</a>
             </mat-menu>
         </a>         
-        <a [routerLink]="['/ropa/lista-cliente']" routerLinkActive="router-link-active" >Tienda</a>        
+        <a [routerLink]="['/ropa/lista-cliente']" routerLinkActive="router-link-active" >Tienda</a>
+        <a [matMenuTriggerFor]="menu4" [routerLink]="['']" *ngIf="authenticated && (isAdmin || isVend)" routerLinkActive="router-link-active">Reportes
+            <mat-menu #menu4="matMenu">
+                <a *ngIf="authenticated &&(isVend || isAdmin)" mat-menu-item [routerLink]="['/pedido/reporte-grafico']" routerLinkActive="router-link-active" >Grafico</a>
+                <!-- <a *ngIf="authenticated &&(isVend || isAdmin)" mat-menu-item [routerLink]="['/pedido/reporte-pdf']" routerLinkActive="router-link-active" >Productos</a> -->
+            </mat-menu>
+        </a>          
         <a [routerLink]="['/pedido/lista-cliente']" *ngIf="authenticated && isClient" routerLinkActive="router-link-active">Mis Pedidos</a>
         <span class="example-spacer"></span>
         <button class="boton" mat-icon-button [routerLink]="['/pedido/procesar']" *ngIf="authenticated && isClient" [matBadge]="cantProd.toString()">

@@ -11,11 +11,13 @@ import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.compo
 import { ProcesarComponent } from './procesar/procesar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select'; 
+import { MatSelectModule } from '@angular/material/select';
+import { ReportePdfComponent } from './reporte-pdf/reporte-pdf.component';
+import { ReporteGraficoComponent } from './reporte-grafico/reporte-grafico.component'; 
 
 @NgModule({
   declarations: [  
-    ListaPedidoVendedorComponent, ListaPedidoClienteComponent, DetallesPedidoComponent, ProcesarComponent
+    ListaPedidoVendedorComponent, ListaPedidoClienteComponent, DetallesPedidoComponent, ProcesarComponent, ReportePdfComponent, ReporteGraficoComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,9 @@ import { MatSelectModule } from '@angular/material/select';
     ListaPedidoVendedorComponent,
        ListaPedidoClienteComponent,
        DetallesPedidoComponent,
-       ProcesarComponent
+       ProcesarComponent,
+       ReportePdfComponent,
+       ReporteGraficoComponent
   ]
 })
 export class PedidoModule { }

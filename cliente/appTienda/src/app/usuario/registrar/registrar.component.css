@@ -2,6 +2,15 @@
   .cuerpo {
     padding: 2% !important;
   }
+
+.espacio{
+  margin-bottom: 2%;
+}
+
+  table {
+  width: 100%;
+  background: linear-gradient(rgba(0, 0, 0), rgba(0, 0, 0, 0.2)) !important;
+}
   
   mat-card {
     border: solid 5px rgb(95, 4, 152, .5) !important;
@@ -61,7 +70,37 @@
     height: fit-content;
   }
 
+  .botonAdd{
+    margin: 20px;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    padding: 9px;
+    border: solid 2.5px rgb(194, 103, 240) !important;
+    background-color: rgb(194, 103, 240);
+    border-radius: 10px !important;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  .botonAdd:hover{
+    margin: 20px;
+    color: rgb(194, 103, 240);
+    text-decoration: none;
+    text-align: center;
+    padding: 9px;
+    border: solid 2.5px rgb(194, 103, 240) !important;
+    background-color: black;
+    border-radius: 10px !important;
+    width: fit-content;
+    height: fit-content;
+  }
+
   mat-card-title{
+    color: blueviolet;
+  }
+
+  h2{
     color: blueviolet;
   }
 

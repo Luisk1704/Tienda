@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
 import Geonames from 'geonames.js';
+import { MatTableDataSource } from '@angular/material/table';
 
 interface MetodoPago {
   value: string;
@@ -24,6 +25,23 @@ export class RegistrarComponent implements OnInit{
     {value: 'Sinpe Movil', viewValue: 'Sinpe Movil'}
   ];
 
+
+  listaDir:any
+  listaPag:any
+
+  dir:Boolean = false;
+  pay:Boolean = false;
+  dataSourceDir=new MatTableDataSource<any>();
+  dataSourcePay=new MatTableDataSource<any>();
+  displayedDirecciones = ['provincia', 'canton','distrito'];
+  displayedPagos = ['metodo', 'proveedor','cuenta'];
+  direccionForm:Boolean = false
+  pagoForm:Boolean = false
+  direcciones:Array<Object> = new Array<Object>
+  pagos: Array<Object> = new Array<Object>
+  provincia:any
+  canton:any
+  distrito:any
   isClient:Boolean
   isVendAdmin:Boolean
   provincias:any
@@ -43,6 +61,7 @@ export class RegistrarComponent implements OnInit{
     private authService: AuthenticationService
   ) {
     this.reactiveForm();
+    this.listaDirecciones()
   }
 
   reactiveForm() {
@@ -66,6 +85,51 @@ export class RegistrarComponent implements OnInit{
     this.getRoles();
   }
   
+  habilitarDireccion(){
+    if (this.direccionForm) {
+      this.direccionForm = false
+    } else {
+      this.direccionForm = true
+      this.formCreate.value.provincia.reset()  
+    }
+  }
+
+  agregarDireccion(){
+    let direccion = {
+      provincia: this.formCreate.value.provincia,
+      canton: this.formCreate.value.canton,
+      distrito: this.formCreate.value.distrito,
+      direccionExacta: this.formCreate.value.direccionExacta,
+      codPostal: this.formCreate.value.codPostal
+    }
+    this.direcciones.push(direccion)
+    this.direccionForm = false
+    this.dir = true
+    this.listaDirecciones()
+  }
+
+  habilitarPago(){
+    if (this.pagoForm) {
+      this.pagoForm = false
+    } else {
+      this.pagoForm = true
+      this.formCreate.value.metodo.reset()      
+    }    
+  }
+
+  agregarPago(){
+    let pago = {
+      metodo: this.formCreate.value.metodo,
+      proveedor: this.formCreate.value.proveedor,
+      numeroCuenta: this.formCreate.value.numeroCuenta,
+      fechaExpiracion: new Date(this.formCreate.value.fechaExpiracion)
+    }
+    this.pagos.push(pago)
+    this.pagoForm = false
+    this.pay = true
+    this.listaMetodos()
+  }
+
   ngOnInit(): void {
     this.listaProvincias()
   }
@@ -77,21 +141,24 @@ export class RegistrarComponent implements OnInit{
       encoding: 'JSON'
     });
 
+    geonames.search({'name':'Costa Rica'}).then(resp => {
+      console.log(resp)
+    })
+
     geonames.children({'geonameId':3624060}).then((resp) => {
-      console.log(resp.geonames)
       this.provincias = resp.geonames
     })
   }
 
-  listaCantones(provincia:any){
+  listaCantones(event?:any){
     const geonames = Geonames({
       username: 'luisamores',
       lan: 'en',
       encoding: 'JSON'
     });
 
-    geonames.children({'geonameId':provincia}).then((resp) => {
-      console.log(resp.geonames)
+    this.provincia = event
+    geonames.children({'geonameId':event}).then((resp) => {
       this.cantones = resp.geonames
     })
   }
@@ -104,7 +171,6 @@ export class RegistrarComponent implements OnInit{
     });
 
     geonames.children({'geonameId':canton}).then((resp) => {
-      console.log(resp.geonames)
       this.distritos = resp.geonames
     })
   }
@@ -127,28 +193,34 @@ export class RegistrarComponent implements OnInit{
     this.authService.createUser(this.formCreate.value)
     .subscribe((respuesta:any)=>{
       this.usuario=respuesta;
+      
+      this.listaDir = this.direcciones
+      this.listaPag = this.pagos
 
-      let direccion = {
-        usuarioId: this.usuario.data.id,
-        provincia: this.formCreate.value.provincia,
-        canton: this.formCreate.value.canton,
-        distrito: this.formCreate.value.distrito,
-        direccionExacta: this.formCreate.value.direccionExacta,
-        codPostal: this.formCreate.value.codPostal,
-        telef: this.formCreate.value.telefono,
-      }
-
-      this.gService.create('direccion',direccion).pipe(takeUntil(this.destroy$)).subscribe((data:any)=>{})
-
-      let metodo = {
-        idCliente: this.usuario.data.id,
-        descripcion: this.formCreate.value.metodo,
-        proveedor: this.formCreate.value.proveedor,
-        numeroCuenta: this.formCreate.value.numeroCuenta,
-        fechaExpiracion: new Date(this.formCreate.value.fechaExpiracion)
-      }
-
-      this.gService.create('metodo',metodo).pipe(takeUntil(this.destroy$)).subscribe((data:any)=>{})
+      this.listaDir.forEach(element => {
+        let direccion = {
+          usuarioId: this.usuario.data.id,
+          provincia: element.provincia,
+          canton: element.canton,
+          distrito: element.distrito,
+          direccionExacta: element.direccionExacta,
+          codPostal: element.codPostal,
+          telef: this.formCreate.value.telefono,
+        }
+        this.gService.create('direccion',direccion).pipe(takeUntil(this.destroy$)).subscribe((data:any)=>{})
+      });
+      
+      this.listaPag.forEach(element => {
+        let metodo = {
+          idCliente: this.usuario.data.id,
+          descripcion: element.metodo,
+          proveedor: element.proveedor,
+          numeroCuenta: element.numeroCuenta,
+          fechaExpiracion: element.fechaExpiracion
+        }
+  
+        this.gService.create('metodo',metodo).pipe(takeUntil(this.destroy$)).subscribe((data:any)=>{})
+      });     
 
       this.router.navigate(['/usuario/login'],{
         //Mostrar un mensaje
@@ -179,4 +251,18 @@ export class RegistrarComponent implements OnInit{
       (this.makeSubmit || this.formCreate.controls[control].touched)
     );
   };
+
+  listaDirecciones(){
+      if (this.direcciones != null) {       
+        this.dataSourceDir = new MatTableDataSource(this.direcciones);
+      }           
+  }
+
+  listaMetodos(){
+    if (this.pagos != null) {       
+      this.dataSourcePay = new MatTableDataSource(this.pagos);
+    }           
+  }
 }
+
+
